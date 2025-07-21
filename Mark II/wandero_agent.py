@@ -1,429 +1,418 @@
-from typing import TypedDict, List, Dict, Literal, Optional
+from typing import Dict, List
+from datetime import datetime, timedelta
 import random
-from datetime import datetime
+from langgraph.graph import StateGraph, END
+from langchain_google_genai import ChatGoogleGenerativeAI
+from graph_state import ConversationState, EmailMessage
+import re
 
-class WanderoState(TypedDict):
-    """Enhanced Wandero state for LLM-driven conversations"""
-    # Identity  
-    company_name: str
-    company_data: Dict
-    agent_name: str
+class WanderoAgent:
+    def __init__(self, company_data: Dict, llm: ChatGoogleGenerativeAI):
+        self.company_data = company_data
+        self.llm = llm
+        self.agent_name = random.choice(["Maria Rodriguez", "Carlos Mendez", "Sofia Vargas"])
+        self.graph = self._build_graph()
     
-    # Conversation
-    messages: List[Dict[str, str]]  # role, content, subject
-    phase: Literal["introduction", "discovery", "proposal", "negotiation", "closing", "done"]
-    
-    # Client understanding
-    client_needs: Dict[str, any]
-    missing_info: List[str]
-    client_concerns: List[str]
-    
-    # Business
-    proposals_made: List[Dict]
-    current_offer: Optional[Dict]
-    discounts_offered: float
-    
-    # Strategy
-    approach: Literal["soft", "standard", "urgent"]
-    attempts: int
-    last_email_subject: str
-
-
-def create_initial_wandero_state(company_data: Dict) -> WanderoState:
-    """Initialize Wandero agent state"""
-    agent_names = ["Maria Rodriguez", "Carlos Mendez", "Sofia Vargas", "Diego Silva"]
-    
-    return WanderoState(
-        company_name=company_data["name"],
-        company_data=company_data,
-        agent_name=random.choice(agent_names),
-        messages=[],
-        phase="introduction",
-        client_needs={},
-        missing_info=["dates", "budget", "group_size", "interests", "special_requirements"],
-        client_concerns=[],
-        proposals_made=[],
-        current_offer=None,
-        discounts_offered=0.0,
-        approach="standard",
-        attempts=0,
-        last_email_subject=f"Welcome to {company_data['name']} - Your Chilean Adventure Awaits!"
-    )
-
-
-def generate_wandero_email(state: WanderoState, action: str, llm) -> Dict:
-    """Generate email content using LLM based on action and state"""
-    
-    # Build comprehensive context
-    context = f"""You are {state['agent_name']}, a travel agent at {state['company_name']}.
-
-Company profile:
-- Type: {state['company_data'].get('type')}
-- Specialties: {', '.join(state['company_data'].get('specialties', []))}
-- Price range: ${state['company_data'].get('price_range', {}).get('min', 0)}-${state['company_data'].get('price_range', {}).get('max', 0)} per day
-- Unique points: {chr(10).join('• ' + point for point in state['company_data'].get('unique_selling_points', []))}
-- Target audience: {state['company_data'].get('target_audience')}
-
-Current situation:
-- Phase: {state['phase']}
-- Messages exchanged: {len(state['messages'])}
-- Missing info: {', '.join(state['missing_info']) if state['missing_info'] else 'have all needed info'}
-- Client concerns noted: {', '.join(state['client_concerns']) if state['client_concerns'] else 'none noted'}
-- Discounts offered: {state['discounts_offered']*100:.0f}%
-- Sales approach: {state['approach']}
-
-What you know about the client:
-{chr(10).join(f"- {k}: {v}" for k, v in state['client_needs'].items()) if state['client_needs'] else "- No information yet"}
-"""
-
-    # Action-specific prompts
-    if action == "greet_and_qualify":
-        prompt = context + f"""
-Write the FIRST email to a potential client who just inquired. This is your introduction email.
-
-Guidelines:
-- Introduce yourself and {state['company_name']}
-- Highlight what makes your company special (based on company type)
-- Show enthusiasm about Chile
-- Ask 1-2 open-ended questions to understand their needs
-- Keep it warm but professional
-- If luxury company: emphasize exclusivity
-- If adventure company: emphasize excitement
-- If family company: emphasize safety and fun
-
-Format as:
-Subject: {state['last_email_subject']}
-[Email body with professional signature including your name and title]"""
-
-    elif action == "gather_details":
-        recent_msg = state['messages'][-1]['content'] if state['messages'] else ""
-        prompt = context + f"""
-Client's last email:
-"{recent_msg}"
-
-You need more information to create a great proposal. Ask about missing details naturally.
-Don't ask more than 2-3 questions at once.
-Priority: dates, group size, interests, budget (but be tactful about budget).
-
-Format as:
-Subject: Re: {state.get('last_email_subject', 'Your Chile Travel Inquiry')}
-[Email body]"""
-
-    elif action == "present_proposal":
-        prompt = context + f"""
-Create a detailed, enticing proposal based on what you know about the client.
-
-Guidelines:
-- Match proposal to company type and client needs
-- Include specific itinerary highlights
-- Mention accommodations level
-- State the price clearly
-- Add value propositions
-- Create excitement about the experience
-- For families: emphasize safety and kid-friendly aspects
-- For adventure: emphasize unique experiences
-- For luxury: emphasize exclusivity and comfort
-
-Make it visual and appealing with good formatting.
-
-Format as:
-Subject: Your Personalized Chile Adventure Proposal
-[Email body with detailed proposal]"""
-
-    elif action == "handle_objection":
-        recent_msg = state['messages'][-1]['content'] if state['messages'] else ""
-        concerns = state['client_concerns'] if state['client_concerns'] else ["general concern"]
+    def _build_graph(self) -> StateGraph:
+        """Build the Wandero agent graph"""
+        workflow = StateGraph(ConversationState)
         
-        prompt = context + f"""
-Client's message expressing concern:
-"{recent_msg}"
-
-Address their specific concern professionally and thoroughly.
-- If about safety: Provide concrete safety measures
-- If about price: Explain value and what's included
-- If about logistics: Give detailed information
-- Use your company's strengths to reassure them
-
-Be empathetic and detailed without being pushy.
-
-Format as:
-Subject: Re: {state.get('last_email_subject', 'Your Chile Travel Inquiry')}
-[Email body]"""
-
-    elif action == "offer_incentive":
-        max_discount = state['company_data'].get('max_discount', 0.15)
-        remaining_discount = max_discount - state['discounts_offered']
+        # Add nodes
+        workflow.add_node("send_introduction", self.send_introduction)
+        workflow.add_node("gather_all_details", self.gather_all_details)
+        workflow.add_node("present_proposal", self.present_proposal)
+        workflow.add_node("handle_negotiation", self.handle_negotiation)
+        workflow.add_node("close_deal", self.close_deal)
+        workflow.add_node("accept_decline", self.accept_decline)
         
-        prompt = context + f"""
-The client is interested but hesitating (probably about price).
-You can offer up to {remaining_discount*100:.0f}% additional discount.
-
-Create an email with a special offer:
-- Make it time-sensitive
-- Explain this is a special rate
-- Add extra value if possible (upgrades, extras)
-- Show enthusiasm about having them as clients
-- Create gentle urgency without being pushy
-
-Current pricing should reflect total discount of {(state['discounts_offered'] + min(0.05, remaining_discount))*100:.0f}%.
-
-Format as:
-Subject: Special Offer for Your Chile Adventure
-[Email body]"""
-
-    elif action == "close_deal":
-        prompt = context + """
-The client has agreed to book! Write a confirmation email that:
-- Shows genuine excitement
-- Confirms key details
-- Outlines clear next steps
-- Provides your direct contact
-- Makes them feel they made a great choice
-- Includes payment instructions
-- Sets expectations for documents/information needed
-
-Make it warm and professional.
-
-Format as:
-Subject: Welcome Aboard! Your Chile Adventure is Confirmed
-[Email body with full signature and contact details]"""
-
-    elif action == "follow_up":
-        prompt = context + """
-The client needs time to think. Write a thoughtful follow-up that:
-- Respects their need for time
-- Offers to send additional information
-- Mentions you'll hold the quoted rate for a few days
-- Provides your direct contact
-- Suggests a follow-up timeline
-- Stays helpful without being pushy
-
-Format as:
-Subject: Re: {state.get('last_email_subject', 'Your Chile Travel Proposal')}
-[Email body]"""
-
-    elif action == "accept_loss":
-        prompt = context + """
-The client has decided not to book. Write a gracious closing email that:
-- Thanks them for their time
-- Leaves the door open for future travel
-- Wishes them well
-- Provides your contact for future needs
-- Stays professional and friendly
-
-Keep it brief and classy.
-
-Format as:
-Subject: Re: {state.get('last_email_subject', 'Your Chile Travel Inquiry')}
-[Email body]"""
-
-    # Generate email
-    response = llm.generate_content(prompt)
+        # Add routing
+        workflow.add_edge("send_introduction", END)
+        workflow.add_edge("gather_all_details", END)
+        workflow.add_edge("present_proposal", END)
+        workflow.add_edge("handle_negotiation", END)
+        workflow.add_edge("close_deal", END)
+        workflow.add_edge("accept_decline", END)
+        
+        # Conditional routing based on state
+        workflow.add_conditional_edges(
+            "send_introduction",
+            self._route_after_intro,
+            {
+                "gather_details": "gather_all_details",
+                "end": END
+            }
+        )
+        
+        workflow.set_entry_point("send_introduction")
+        
+        return workflow.compile()
     
-    # Parse response
-    lines = response.text.strip().split('\n')
-    subject = ""
-    body_lines = []
+    def _route_after_intro(self, state: ConversationState) -> str:
+        """Determine next action after introduction"""
+        if not state.get("all_info_gathered"):
+            return "gather_details"
+        return "end"
     
-    for i, line in enumerate(lines):
-        if line.startswith("Subject:"):
-            subject = line.replace("Subject:", "").strip()
-        elif i > 0:
-            body_lines.append(line)
-    
-    body = '\n'.join(body_lines).strip()
-    
-    # Update state based on action and content
-    if action == "greet_and_qualify":
+    def send_introduction(self, state: ConversationState) -> ConversationState:
+        """Send initial introduction email"""
+        prompt = f"""
+        You are {self.agent_name} from {self.company_data['name']}.
+        
+        Company profile:
+        - Type: {self.company_data.get('type')}
+        - Specialties: {', '.join(self.company_data.get('specialties', []))}
+        - Unique points: {', '.join(self.company_data.get('unique_selling_points', [])[:2])}
+        
+        Write a welcoming introduction email that:
+        1. Introduces yourself and the company
+        2. Highlights what makes you special (based on company type)
+        3. Shows enthusiasm about Chile
+        4. Asks for their travel details (dates, budget, group size, interests)
+        5. Keeps it professional but warm
+        
+        Format:
+        Subject: Welcome to {self.company_data['name']} - Your Chilean Adventure Awaits!
+        Body: [professional email with signature]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{self.agent_name} <{self.company_data['name']}>",
+            timestamp=state["current_time"],
+            sentiment=0.8
+        )
+        
+        state["messages"] = [email]  # First message
         state["phase"] = "discovery"
+        state["agent_name"] = self.agent_name
+        state["company_name"] = self.company_data['name']
+        state["company_type"] = self.company_data.get('type', 'standard')
+        
+        return state
     
-    elif action == "gather_details":
-        # Track what we're asking about
-        for info in state["missing_info"][:]:
-            if info in body.lower():
-                # We asked about it, might get answer next
-                pass
+    def gather_all_details(self, state: ConversationState) -> ConversationState:
+        """Ask for ALL missing details at once"""
+        # Check what we still need
+        missing = []
+        if not state.get("client_budget"):
+            missing.append("budget range")
+        if not state.get("client_travel_dates"):
+            missing.append("preferred travel dates")
+        if not state.get("client_group_size"):
+            missing.append("number of travelers")
+        if not state.get("client_interests") or len(state["client_interests"]) == 0:
+            missing.append("specific interests or must-see places")
+            
+        if not missing:
+            state["all_info_gathered"] = True
+            return state
+        
+        # Get last client message
+        last_client_msg = ""
+        for msg in reversed(state["messages"]):
+            if msg["sender"] == state["client_name"]:
+                last_client_msg = msg["body"]
+                break
+        
+        prompt = f"""
+        You are {state['agent_name']} from {state['company_name']}.
+        
+        Client's last message:
+        "{last_client_msg}"
+        
+        You need to gather these missing details efficiently:
+        {', '.join(missing)}
+        
+        Write a friendly but efficient email that:
+        1. Acknowledges what they've shared
+        2. Asks for ALL missing information in one go
+        3. Explains why you need each piece of info
+        4. Keeps it concise and organized
+        
+        Format:
+        Subject: Re: [previous subject]
+        Body: [organized email asking for all details]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        # Calculate response time (1-2 hours during business hours)
+        response_delay = timedelta(hours=random.uniform(1, 2))
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state["current_time"] + response_delay,
+            sentiment=0.7
+        )
+        
+        state["messages"].append(email)
+        state["last_wandero_response_time"] = email["timestamp"]
+        
+        return state
     
-    elif action == "present_proposal":
-        # Create a basic proposal structure
-        if state["company_data"].get("type") == "luxury":
+    def present_proposal(self, state: ConversationState) -> ConversationState:
+        """Present a comprehensive proposal based on all gathered info"""
+        # Build proposal based on company type and client needs
+        if self.company_data.get('type') == 'luxury':
             base_price = 800
-        elif state["company_data"].get("type") == "adventure":
+            package_name = "Exclusive Chile Experience"
+        elif self.company_data.get('type') == 'adventure':
             base_price = 350
-        elif state["company_data"].get("type") == "family":
+            package_name = "Chile Adventure Expedition"
+        elif self.company_data.get('type') == 'family':
             base_price = 450
+            package_name = "Family Chile Discovery"
         else:
             base_price = 300
+            package_name = "Classic Chile Journey"
             
+        # Adjust for group size
+        group_size = self._extract_group_size(state.get("client_group_size", "solo"))
+        total_price = base_price * group_size * 7  # Assume 7-day trip
+        
+        prompt = f"""
+        You are {state['agent_name']} presenting a detailed proposal.
+        
+        Client details:
+        - Name: {state['client_name']}
+        - Budget: ${state.get('client_budget', {}).get('min', 0)}-${state.get('client_budget', {}).get('max', 0)}
+        - Dates: {state.get('client_travel_dates', 'flexible')}
+        - Group: {state.get('client_group_size', 'solo')}
+        - Interests: {', '.join(state.get('client_interests', []))}
+        
+        Create a detailed proposal for "{package_name}":
+        - Base price: ${base_price}/person/day
+        - Total estimated: ${total_price}
+        - Duration: 7 days/6 nights
+        
+        Include:
+        1. Specific itinerary highlights matching their interests
+        2. Accommodation details
+        3. What's included/excluded
+        4. Clear pricing breakdown
+        5. Value propositions
+        
+        Make it visual and exciting but honest about pricing.
+        
+        Format:
+        Subject: Your Personalized {package_name} Proposal
+        Body: [detailed, well-formatted proposal]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        # Store proposal
         proposal = {
-            "base_price_per_day": base_price,
-            "presented_at": datetime.now().isoformat(),
-            "includes": "accommodations, transfers, guided tours, some meals"
+            "name": package_name,
+            "base_price": base_price,
+            "total_price": total_price,
+            "duration": "7 days/6 nights"
         }
-        state["proposals_made"].append(proposal)
+        state["proposals_made"] = [proposal]
         state["current_offer"] = proposal
+        
+        # Quick response for proposals (30-60 min)
+        response_delay = timedelta(minutes=random.uniform(30, 60))
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state.get("current_time", datetime.now()) + response_delay,
+            sentiment=0.8
+        )
+        
+        state["messages"].append(email)
         state["phase"] = "proposal"
+        state["last_wandero_response_time"] = email["timestamp"]
+        
+        return state
     
-    elif action == "handle_objection":
-        # Note that we addressed concerns
-        state["attempts"] += 1
-    
-    elif action == "offer_incentive":
-        # Apply discount
-        max_discount = state["company_data"].get('max_discount', 0.15)
-        if state["discounts_offered"] < max_discount:
-            state["discounts_offered"] = min(state["discounts_offered"] + 0.05, max_discount)
-        state["approach"] = "urgent"
-        state["phase"] = "negotiation"
-    
-    elif action == "close_deal":
-        state["phase"] = "done"
-    
-    elif action == "follow_up":
-        state["phase"] = "done"
-    
-    elif action == "accept_loss":
-        state["phase"] = "done"
-    
-    # Store the email
-    state["messages"].append({
-        "role": "wandero",
-        "content": body,
-        "subject": subject
-    })
-    state["last_email_subject"] = subject
-    
-    return {"subject": subject, "body": body, "state": state}
-
-
-def get_wandero_action(state: WanderoState, llm) -> str:
-    """Use LLM to intelligently decide next action"""
-    
-    # Build conversation context
-    conversation_summary = "Starting new conversation"
-    if state["messages"]:
-        recent_msgs = state["messages"][-3:]
-        conversation_summary = "\n".join([
-            f"{msg['role']}: {msg['content'][:100]}..." for msg in recent_msgs
-        ])
-    
-    # Analyze client's last message for concerns
-    client_sentiment = "neutral"
-    if state["messages"]:
+    def handle_negotiation(self, state: ConversationState) -> ConversationState:
+        """Handle price negotiations or concerns"""
+        # Analyze client's concern
+        last_client_msg = ""
         for msg in reversed(state["messages"]):
-            if msg["role"] == "client":
-                last_client_msg = msg["content"].lower()
-                if any(word in last_client_msg for word in ["worried", "concern", "afraid", "safety", "expensive"]):
-                    client_sentiment = "concerned"
-                elif any(word in last_client_msg for word in ["excited", "love", "perfect", "great", "yes"]):
-                    client_sentiment = "positive"
-                elif any(word in last_client_msg for word in ["no", "sorry", "cannot", "won't"]):
-                    client_sentiment = "negative"
+            if msg["sender"] == state["client_name"]:
+                last_client_msg = msg["body"].lower()
                 break
-    
-    prompt = f"""You are orchestrating a travel agent's sales strategy.
-
-Company: {state['company_name']} ({state['company_data'].get('type')} travel)
-Current phase: {state['phase']}
-Messages exchanged: {len(state['messages'])}
-Client sentiment: {client_sentiment}
-
-Recent conversation:
-{conversation_summary}
-
-Current status:
-- Missing information: {len(state['missing_info'])} items
-- Proposals made: {len(state['proposals_made'])}
-- Discounts offered: {state['discounts_offered']*100:.0f}%
-- Maximum allowed discount: {state['company_data'].get('max_discount', 0.15)*100:.0f}%
-
-Available actions:
-1. greet_and_qualify - Initial introduction (only if no messages yet)
-2. gather_details - Ask for missing information
-3. present_proposal - Show detailed package/pricing
-4. handle_objection - Address specific concerns
-5. offer_incentive - Provide discount/special offer
-6. close_deal - Finalize booking (if client agrees)
-7. follow_up - Schedule future contact
-8. accept_loss - End gracefully if not interested
-
-Analyze the conversation and choose the most appropriate sales action.
-Consider:
-- Do we have enough info to make a proposal?
-- Has the client expressed specific concerns to address?
-- Are they ready to book or need more convincing?
-- Have we been too pushy? Should we back off?
-
-Return ONLY the action name."""
-
-    response = llm.generate_content(prompt)
-    action = response.text.strip().lower().replace(" ", "_")
-    
-    # Validate action
-    valid_actions = ["greet_and_qualify", "gather_details", "present_proposal",
-                    "handle_objection", "offer_incentive", "close_deal",
-                    "follow_up", "accept_loss"]
-    
-    if action not in valid_actions:
-        # Smart fallback based on conversation state
-        if not state["messages"]:
-            return "greet_and_qualify"
-        elif client_sentiment == "concerned":
-            return "handle_objection"
-        elif client_sentiment == "positive" and state["proposals_made"]:
-            return "close_deal"
-        elif client_sentiment == "negative":
-            return "accept_loss"
-        elif len(state["missing_info"]) > 2 and not state["proposals_made"]:
-            return "gather_details"
-        elif not state["proposals_made"] and len(state["messages"]) > 2:
-            return "present_proposal"
+                
+        # Determine response type
+        if "price" in last_client_msg or "expensive" in last_client_msg or "budget" in last_client_msg:
+            response_type = "price_concern"
+        elif "safety" in last_client_msg or "safe" in last_client_msg:
+            response_type = "safety_concern"
         else:
-            return "follow_up"
+            response_type = "general_concern"
+            
+        # Check if we can offer discount
+        max_discount = self.company_data.get('max_discount', 0.15)
+        can_discount = state.get("discounts_offered", 0) < max_discount
+        
+        if response_type == "price_concern" and can_discount:
+            new_discount = min(0.1, max_discount - state.get("discounts_offered", 0))
+            state["discounts_offered"] = state.get("discounts_offered", 0) + new_discount
+            discount_text = f"special {int(new_discount * 100)}% discount"
+        else:
+            discount_text = "our best value options"
+            
+        prompt = f"""
+        You are {state['agent_name']} addressing client concerns.
+        
+        Client concern type: {response_type}
+        Their message: "{last_client_msg}"
+        
+        Company type: {self.company_data.get('type')}
+        Can offer discount: {can_discount}
+        Discount to offer: {discount_text}
+        
+        Write a response that:
+        1. Addresses their specific concern thoroughly
+        2. {"Offers the discount if price is the issue" if can_discount else "Explains the value"}
+        3. Reassures without being pushy
+        4. Creates gentle urgency if offering discount
+        
+        Be understanding and professional.
+        
+        Format:
+        Subject: Re: [previous subject]
+        Body: [response addressing concerns]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        # Quick response to concerns (1-2 hours)
+        response_delay = timedelta(hours=random.uniform(1, 2))
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state.get("current_time", datetime.now()) + response_delay,
+            sentiment=0.7
+        )
+        
+        state["messages"].append(email)
+        state["phase"] = "negotiation"
+        state["last_wandero_response_time"] = email["timestamp"]
+        
+        return state
     
-    return action
-
-
-def parse_client_info(state: WanderoState, client_message: str):
-    """Extract client information from their message"""
-    message_lower = client_message.lower()
+    def close_deal(self, state: ConversationState) -> ConversationState:
+        """Send booking confirmation"""
+        prompt = f"""
+        You are {state['agent_name']} sending a booking confirmation.
+        
+        The client has agreed to book {state['current_offer']['name']}.
+        
+        Write an enthusiastic confirmation email that:
+        1. Expresses genuine excitement
+        2. Confirms key details
+        3. Lists clear next steps
+        4. Provides payment instructions
+        5. Gives your direct contact info
+        6. Makes them feel great about their decision
+        
+        Format:
+        Subject: 🎉 Booking Confirmed - Your {state['current_offer']['name']} Adventure!
+        Body: [warm confirmation email with all details]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        # Very quick response for confirmations (15-30 min)
+        response_delay = timedelta(minutes=random.uniform(15, 30))
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state.get("current_time", datetime.now()) + response_delay,
+            sentiment=0.9
+        )
+        
+        state["messages"].append(email)
+        state["phase"] = "closing"
+        state["conversation_ended"] = True
+        
+        return state
     
-    # Extract dates
-    if any(month in message_lower for month in ["january", "february", "march", "april", "may", "june", 
-                                                 "july", "august", "september", "october", "november", "december"]):
-        if "dates" in state["missing_info"]:
-            state["missing_info"].remove("dates")
-        state["client_needs"]["travel_dates"] = "mentioned in email"
+    def accept_decline(self, state: ConversationState) -> ConversationState:
+        """Gracefully accept client's decision to not book"""
+        prompt = f"""
+        You are {state['agent_name']} responding to a client who decided not to book.
+        
+        Write a gracious closing email that:
+        1. Thanks them for their time
+        2. Leaves the door open for future
+        3. Wishes them well
+        4. Provides your contact for future
+        5. Stays professional and warm
+        
+        Keep it brief and classy.
+        
+        Format:
+        Subject: Re: [previous subject]
+        Body: [brief, gracious closing]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        # Standard response time
+        response_delay = timedelta(hours=random.uniform(2, 4))
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state.get("current_time", datetime.now()) + response_delay,
+            sentiment=0.6
+        )
+        
+        state["messages"].append(email)
+        state["phase"] = "abandoned"
+        state["conversation_ended"] = True
+        
+        return state
     
-    # Extract budget
-    if "$" in client_message or "budget" in message_lower:
-        if "budget" in state["missing_info"]:
-            state["missing_info"].remove("budget")
-        state["client_needs"]["budget"] = "mentioned in email"
+    def _extract_group_size(self, group_description: str) -> int:
+        """Extract numeric group size from description"""
+        if "solo" in group_description.lower():
+            return 1
+        elif "couple" in group_description.lower() or "two" in group_description.lower():
+            return 2
+        elif "family" in group_description.lower():
+            return 4  # Assume family of 4
+        else:
+            # Try to extract number
+            numbers = re.findall(r'\d+', group_description)
+            return int(numbers[0]) if numbers else 1
     
-    # Extract group size
-    if any(word in message_lower for word in ["solo", "alone", "myself", "couple", "two", "family", 
-                                               "children", "kids", "group"]):
-        if "group_size" in state["missing_info"]:
-            state["missing_info"].remove("group_size")
-        state["client_needs"]["group_size"] = "mentioned in email"
-    
-    # Extract interests
-    if any(word in message_lower for word in ["adventure", "hiking", "wine", "culture", "relax", 
-                                               "beach", "mountain", "city"]):
-        if "interests" in state["missing_info"]:
-            state["missing_info"].remove("interests")
-        state["client_needs"]["interests"] = "mentioned in email"
-    
-    # Extract concerns
-    concern_keywords = {
-        "safety": ["safe", "security", "dangerous", "crime"],
-        "health": ["medical", "hospital", "doctor", "allergy", "dietary"],
-        "cost": ["expensive", "afford", "cheaper", "budget", "cost"],
-        "weather": ["weather", "rain", "cold", "hot", "season"]
-    }
-    
-    for concern_type, keywords in concern_keywords.items():
-        if any(keyword in message_lower for keyword in keywords):
-            if concern_type not in state["client_concerns"]:
-                state["client_concerns"].append(concern_type)
+    def _parse_email_response(self, response: str) -> tuple[str, str]:
+        """Parse LLM response into subject and body"""
+        lines = response.strip().split('\n')
+        subject = "Re: Your Chile Travel Inquiry"
+        body_lines = []
+        
+        in_body = False
+        for line in lines:
+            if line.startswith("Subject:"):
+                subject = line.replace("Subject:", "").strip()
+            elif line.startswith("Body:"):
+                in_body = True
+            elif in_body or (subject != "Re: Your Chile Travel Inquiry" and not line.startswith("Subject:")):
+                body_lines.append(line)
+        
+        body = '\n'.join(body_lines).strip()
+        return subject, body
