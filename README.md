@@ -56,9 +56,13 @@ python main.py
 
 ### Example Interaction flows
 
-[[conversation_states/adventure.md]] Fast-paced, enthusiastic booking that completed in 25 minutes with a $8,500 package
+**🎭 Adventure Couple Success Story**  
+[**→ View Complete Conversation**](conversation_states/adventure.md)  
+Fast-paced, enthusiastic booking that completed in 25 minutes with a $8,500 package
 
-[[conversation_states/business.md]] Professional, detailed inquiry process leading to a scheduled consultation call | which can't be done with wandero
+**💼 Business Solo Professional Journey**  
+[**→ View Complete Conversation**](conversation_states/business.md)  
+Professional, detailed inquiry process leading to a scheduled consultation call
 
 Both demonstrate authentic persona behaviors, realistic email timing, and natural conversation progression that would help Wandero test their agent responses effectively.
 
