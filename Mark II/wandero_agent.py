@@ -5,6 +5,7 @@ from langgraph.graph import StateGraph, END
 from langchain_google_genai import ChatGoogleGenerativeAI
 from graph_state import ConversationState, EmailMessage
 import re
+import time
 
 class WanderoAgent:
     def __init__(self, company_data: Dict, llm: ChatGoogleGenerativeAI):
@@ -25,23 +26,69 @@ class WanderoAgent:
         workflow.add_node("close_deal", self.close_deal)
         workflow.add_node("accept_decline", self.accept_decline)
         
-        # Add routing
-        workflow.add_edge("send_introduction", END)
-        workflow.add_edge("gather_all_details", END)
-        workflow.add_edge("present_proposal", END)
-        workflow.add_edge("handle_negotiation", END)
-        workflow.add_edge("close_deal", END)
-        workflow.add_edge("accept_decline", END)
+        # REMOVE ALL CONFLICTING UNCONDITIONAL EDGES
+        # These were causing the infinite loop by conflicting with conditional routing
         
-        # Conditional routing based on state
-        workflow.add_conditional_edges(
-            "send_introduction",
-            self._route_after_intro,
-            {
-                "gather_details": "gather_all_details",
-                "end": END
-            }
-        )
+        # Create a single routing function that handles all transitions
+        def route_wandero_action(state: ConversationState) -> str:
+            """Route to appropriate Wandero action based on state"""
+            
+            # If conversation is ended, finish
+            if state.get("conversation_ended"):
+                return "END"
+            
+            # If this is the first interaction, send introduction
+            if not state.get("messages"):
+                return "send_introduction"
+                
+            # Check if we just sent introduction - move to gathering details
+            if state["phase"] == "introduction":
+                return "gather_all_details"
+                
+            # If we don't have all info, keep gathering
+            if not state.get("all_info_gathered"):
+                return "gather_all_details"
+                
+            # If we have all info but haven't sent proposal, send it
+            if state.get("all_info_gathered") and state["phase"] == "discovery":
+                return "present_proposal"
+                
+            # Handle client responses to proposal
+            if state["phase"] == "proposal":
+                return "handle_negotiation"
+                
+            # Continue negotiation
+            if state["phase"] == "negotiation":
+                # Check if client wants to book or decline
+                if state.get("ready_to_book"):
+                    return "close_deal"
+                else:
+                    return "handle_negotiation"
+            
+            # Handle final decisions
+            if state.get("ready_to_book"):
+                return "close_deal"
+            elif state.get("conversation_ended"):
+                return "accept_decline"
+            else:
+                return "handle_negotiation"
+        
+        # Add conditional routing from ALL nodes
+        for node in ["send_introduction", "gather_all_details", "present_proposal", 
+                    "handle_negotiation", "close_deal", "accept_decline"]:
+            workflow.add_conditional_edges(
+                node,
+                route_wandero_action,
+                {
+                    "send_introduction": "send_introduction",
+                    "gather_all_details": "gather_all_details", 
+                    "present_proposal": "present_proposal",
+                    "handle_negotiation": "handle_negotiation",
+                    "close_deal": "close_deal",
+                    "accept_decline": "accept_decline",
+                    "END": END
+                }
+            )
         
         workflow.set_entry_point("send_introduction")
         
@@ -74,7 +121,7 @@ class WanderoAgent:
         Subject: Welcome to {self.company_data['name']} - Your Chilean Adventure Awaits!
         Body: [professional email with signature]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -82,12 +129,12 @@ class WanderoAgent:
             subject=subject,
             body=body,
             sender=f"{self.agent_name} <{self.company_data['name']}>",
-            timestamp=state["current_time"],
+            timestamp=state.get("current_time", datetime.now()),
             sentiment=0.8
         )
         
         state["messages"] = [email]  # First message
-        state["phase"] = "discovery"
+        state["phase"] = "introduction"  # Change this to introduction instead of discovery
         state["agent_name"] = self.agent_name
         state["company_name"] = self.company_data['name']
         state["company_type"] = self.company_data.get('type', 'standard')
@@ -137,7 +184,7 @@ class WanderoAgent:
         Subject: Re: [previous subject]
         Body: [organized email asking for all details]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -206,6 +253,7 @@ class WanderoAgent:
         Body: [detailed, well-formatted proposal]
         """
         
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -286,7 +334,7 @@ class WanderoAgent:
         Subject: Re: [previous subject]
         Body: [response addressing concerns]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -326,7 +374,7 @@ class WanderoAgent:
         Subject: 🎉 Booking Confirmed - Your {state['current_offer']['name']} Adventure!
         Body: [warm confirmation email with all details]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -367,7 +415,7 @@ class WanderoAgent:
         Subject: Re: Your Chile Travel Inquiry
         Body: [brief, gracious closing about their Chile travel plans]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -481,7 +529,7 @@ class WanderoAgent:
         Subject: Re: Your Chile Adventure - Let's Make It Work!
         Body: [helpful response about pricing]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -532,7 +580,7 @@ class WanderoAgent:
         Subject: Re: Authentic Chilean Experiences - Absolutely!
         Body: [reassuring response about authentic Chile travel]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -580,7 +628,7 @@ class WanderoAgent:
         Subject: Re: Your Chile Adventure
         Body: [response focused on their Chile travel plans]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -620,7 +668,7 @@ class WanderoAgent:
         Subject: Re: Your Chile Travel Inquiry
         Body: [brief, gracious closing about their Chile travel plans]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         

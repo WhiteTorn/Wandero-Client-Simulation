@@ -5,6 +5,7 @@ from langgraph.graph import StateGraph, END
 from langchain_google_genai import ChatGoogleGenerativeAI
 from graph_state import ConversationState, EmailMessage
 import re
+import time
 
 class ClientAgent:
     def __init__(self, persona_data: Dict, llm: ChatGoogleGenerativeAI):
@@ -25,9 +26,14 @@ class ClientAgent:
         workflow.add_node("send_final_decision", self.send_final_decision)
         workflow.add_node("remember_forgotten_detail", self.remember_forgotten_detail)
 
-        # Fix: Create a proper routing function that returns the node name directly
-        def route_after_analysis(state: ConversationState) -> str:
+        # Create a single routing function to avoid conflicts
+        def route_client_action(state: ConversationState) -> str:
             """Route based on conversation state"""
+            
+            # If conversation ended, finish
+            if state.get("conversation_ended"):
+                return "END"
+                
             if not state.get("messages"):
                 return "compose_initial_inquiry"
             
@@ -52,20 +58,24 @@ class ClientAgent:
             else:
                 return "send_final_decision"
 
-        # Fix: Use the local function instead of self method
-        workflow.add_conditional_edges(
-            "analyze_situation", 
-            route_after_analysis,
-            # Remove the mapping dict - let LangGraph use the direct return values
-        )
-        
-        # Add edges with conditions
-        workflow.add_edge("compose_initial_inquiry", END)
-        workflow.add_edge("provide_all_details", END)
-        workflow.add_edge("respond_to_proposal", END)
-        workflow.add_edge("negotiate_or_decide", END)
-        workflow.add_edge("send_final_decision", END)
-        workflow.add_edge("remember_forgotten_detail", END)
+        # Add conditional routing from ALL nodes  
+        for node in ["analyze_situation", "compose_initial_inquiry", "provide_all_details",
+                    "respond_to_proposal", "negotiate_or_decide", "send_final_decision",
+                    "remember_forgotten_detail"]:
+            workflow.add_conditional_edges(
+                node,
+                route_client_action,
+                {
+                    "analyze_situation": "analyze_situation",
+                    "compose_initial_inquiry": "compose_initial_inquiry",
+                    "provide_all_details": "provide_all_details", 
+                    "respond_to_proposal": "respond_to_proposal",
+                    "negotiate_or_decide": "negotiate_or_decide",
+                    "send_final_decision": "send_final_decision",
+                    "remember_forgotten_detail": "remember_forgotten_detail",
+                    "END": END
+                }
+            )
         
         # Set entry point
         workflow.set_entry_point("analyze_situation")
@@ -251,7 +261,7 @@ class ClientAgent:
         Subject: Re: [previous subject]
         Body: [natural response]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -297,7 +307,7 @@ class ClientAgent:
         Subject: Re: [previous subject]
         Body: [decision email]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -338,7 +348,7 @@ class ClientAgent:
         Subject: Re: [previous subject] - One more thing
         Body: [brief email mentioning the forgotten detail]
         """
-        
+        time.sleep(10)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
