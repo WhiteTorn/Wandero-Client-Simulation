@@ -180,7 +180,7 @@ async def run_simulation():
             company_info=company_info,
             google_api_key=google_api_key,
             gmail_credentials_file="credentials.json",
-            test_mode=test_mode  # Add this parameter
+            test_mode=test_mode
         )
         
         # Start conversation
@@ -194,6 +194,26 @@ async def run_simulation():
         # Run conversation loop
         logger.info("[MONITOR] Starting conversation monitoring loop...")
         await agent.run_conversation_loop()
+        
+        # Final report when conversation ends
+        state = agent.state_manager.get_state()
+        final_outcome = agent.state_manager.get_final_outcome()
+        
+        print(f"\n{'='*60}")
+        print(f"CONVERSATION COMPLETED")
+        print(f"{'='*60}")
+        print(f"Final Phase: {state.get('phase', 'unknown')}")
+        print(f"Final Outcome: {final_outcome or 'ongoing'}")
+        print(f"Interest Level: {state.get('interest_level', 0.5):.2f}/1.0")
+        print(f"Total Messages: {len(state.get('messages', []))}")
+        print(f"Duration: {datetime.now() - state.get('conversation_start', datetime.now())}")
+        
+        if final_outcome == "booked":
+            print(f"🎉 SUCCESS: Client booked the trip!")
+        elif final_outcome == "abandoned":
+            print(f"❌ ABANDONED: Client declined to book")
+        else:
+            print(f"⏱️  ONGOING: Conversation still in progress")
         
     except KeyboardInterrupt:
         logger.info("\n[EXIT] Simulation stopped by user")

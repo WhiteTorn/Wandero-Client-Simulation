@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Dict, Optional, List
+from typing import TypedDict, List, Dict, Literal, Optional
 from datetime import datetime
 from pathlib import Path
 import logging
@@ -40,7 +40,7 @@ class StateManager:
                 # Convert timestamp strings back to datetime objects
                 self._deserialize_timestamps(state)
                 
-                logger.info(f"📁 Loaded existing conversation state from {self.state_file}")
+                logger.info(f"[STATE] Loaded existing conversation state from {self.state_file}")
                 logger.info(f"   Phase: {state.get('phase', 'unknown')}")
                 logger.info(f"   Messages: {len(state.get('messages', []))}")
                 logger.info(f"   Interest Level: {state.get('interest_level', 0.5)}")
@@ -48,7 +48,7 @@ class StateManager:
                 return state
                 
             except Exception as e:
-                logger.error(f"❌ Error loading state file: {str(e)}")
+                logger.error(f"[ERROR] Error loading state file: {str(e)}")
                 logger.info("Creating fresh state...")
                 
         # Create new state
@@ -86,8 +86,8 @@ class StateManager:
             # Company information
             "company_info": {},  # Will be set when first email received
             
-            # Conversation tracking
-            "phase": "initial",  # initial, information_gathering, proposal_review, negotiation, booking, completed
+            # Conversation tracking - UPDATED with new phases
+            "phase": "initial",  # initial, information_gathering, proposal_review, negotiation, booking_confirmation, payment_processing, abandoned, completed
             "interest_level": 0.5,
             "abandonment_risk": 0.1,
             
@@ -95,6 +95,9 @@ class StateManager:
             "proposals_received": [],
             "current_offer": None,
             "discounts_mentioned": 0.0,
+            "invoice_received": False,
+            "payment_made": False,
+            "final_outcome": None,  # "booked", "abandoned", "ongoing"
             
             # Behavioral state
             "shared_info": {
@@ -118,7 +121,7 @@ class StateManager:
             "conversation_ended": False
         }
         
-        logger.info(f"🆕 Created fresh conversation state for {persona_data['name']}")
+        logger.info(f"[NEW] Created fresh conversation state for {persona_data['name']}")
         logger.info(f"   Personality: {persona_data.get('personality', 'standard')}")
         logger.info(f"   Budget: ${persona_data.get('budget', {}).get('min', 'unknown')}-${persona_data.get('budget', {}).get('max', 'unknown')}")
         logger.info(f"   Interests: {', '.join(persona_data.get('interests', []))}")
@@ -138,10 +141,10 @@ class StateManager:
             with open(self.state_path, 'w') as f:
                 json.dump(state_to_save, f, indent=2, default=str)
                 
-            logger.debug(f"💾 State saved to {self.state_file}")
+            logger.debug(f"[SAVE] State saved to {self.state_file}")
             
         except Exception as e:
-            logger.error(f"❌ Error saving state: {str(e)}")
+            logger.error(f"[ERROR] Error saving state: {str(e)}")
     
     def _serialize_timestamps(self, state: Dict):
         """Convert datetime objects to ISO strings for JSON serialization"""
@@ -191,7 +194,7 @@ class StateManager:
             
         self.save_state()
         
-        logger.info(f"💬 Message added to conversation")
+        logger.info(f"[MESSAGE] Message added to conversation")
         logger.info(f"   From: {message['sender']}")
         logger.info(f"   Subject: {message.get('subject', 'No subject')}")
     
@@ -199,18 +202,55 @@ class StateManager:
         """Update conversation phase"""
         old_phase = self.state.get('phase', 'unknown')
         self.state['phase'] = new_phase
+        
+        # Set final outcome when conversation ends
+        if new_phase == "payment_processing":
+            self.state['final_outcome'] = "booked"
+            self.state['conversation_ended'] = True
+        elif new_phase == "abandoned":
+            self.state['final_outcome'] = "abandoned"
+            self.state['conversation_ended'] = True
+        
         self.save_state()
         
-        logger.info(f"🔄 Phase changed: {old_phase} → {new_phase}")
+        logger.info(f"[PHASE] Phase changed: {old_phase} -> {new_phase}")
+        
+        # Special logging for final phases
+        if new_phase == "payment_processing":
+            logger.info(f"[SUCCESS] Conversation completed successfully - Client booked!")
+        elif new_phase == "abandoned":
+            logger.info(f"[ABANDONED] Conversation abandoned by client")
     
     def update_interest_level(self, new_level: float):
         """Update client interest level"""
         old_level = self.state.get('interest_level', 0.5)
         self.state['interest_level'] = max(0, min(1, new_level))
+        
+        # Update abandonment risk based on interest level
+        if self.state['interest_level'] < 0.3:
+            self.state['abandonment_risk'] = min(1.0, self.state['abandonment_risk'] + 0.1)
+        elif self.state['interest_level'] > 0.7:
+            self.state['abandonment_risk'] = max(0.0, self.state['abandonment_risk'] - 0.1)
+        
         self.save_state()
         
         if abs(new_level - old_level) > 0.1:  # Only log significant changes
-            logger.info(f"📈 Interest level: {old_level:.2f} → {new_level:.2f}")
+            logger.info(f"[INTEREST] Interest level: {old_level:.2f} -> {new_level:.2f}")
+            
+            # Check for potential abandonment
+            if self.state['interest_level'] < 0.2:
+                logger.info(f"[WARNING] Low interest level - high abandonment risk!")
+    
+    def set_booking_details(self, invoice_received: bool = False, payment_made: bool = False):
+        """Update booking-related flags"""
+        self.state['invoice_received'] = invoice_received
+        self.state['payment_made'] = payment_made
+        self.save_state()
+        
+        if invoice_received:
+            logger.info(f"[BOOKING] Invoice received")
+        if payment_made:
+            logger.info(f"[PAYMENT] Payment made - booking complete!")
     
     def get_state(self) -> Dict:
         """Get current state"""
@@ -219,6 +259,10 @@ class StateManager:
     def is_conversation_ended(self) -> bool:
         """Check if conversation has ended"""
         return self.state.get('conversation_ended', False)
+    
+    def get_final_outcome(self) -> Optional[str]:
+        """Get final outcome: 'booked', 'abandoned', or None if ongoing"""
+        return self.state.get('final_outcome')
     
     def get_last_processed_message_id(self) -> Optional[str]:
         """Get ID of last processed message to avoid duplicates"""
