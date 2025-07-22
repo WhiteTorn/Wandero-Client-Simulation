@@ -7,6 +7,8 @@ from graph_state import ConversationState, EmailMessage
 import re
 import time
 
+delay = 7
+
 class WanderoAgent:
     def __init__(self, company_data: Dict, llm: ChatGoogleGenerativeAI):
         self.company_data = company_data
@@ -121,7 +123,7 @@ class WanderoAgent:
         Subject: Welcome to {self.company_data['name']} - Your Chilean Adventure Awaits!
         Body: [professional email with signature]
         """
-        time.sleep(10)
+        time.sleep(delay)  
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -184,7 +186,7 @@ class WanderoAgent:
         Subject: Re: [previous subject]
         Body: [organized email asking for all details]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -253,7 +255,7 @@ class WanderoAgent:
         Body: [detailed, well-formatted proposal]
         """
         
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -334,7 +336,7 @@ class WanderoAgent:
         Subject: Re: [previous subject]
         Body: [response addressing concerns]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -374,7 +376,7 @@ class WanderoAgent:
         Subject: 🎉 Booking Confirmed - Your {state['current_offer']['name']} Adventure!
         Body: [warm confirmation email with all details]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -415,7 +417,7 @@ class WanderoAgent:
         Subject: Re: Your Chile Travel Inquiry
         Body: [brief, gracious closing about their Chile travel plans]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -529,7 +531,7 @@ class WanderoAgent:
         Subject: Re: Your Chile Adventure - Let's Make It Work!
         Body: [helpful response about pricing]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -580,7 +582,7 @@ class WanderoAgent:
         Subject: Re: Authentic Chilean Experiences - Absolutely!
         Body: [reassuring response about authentic Chile travel]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -628,7 +630,7 @@ class WanderoAgent:
         Subject: Re: Your Chile Adventure
         Body: [response focused on their Chile travel plans]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -668,7 +670,7 @@ class WanderoAgent:
         Subject: Re: Your Chile Travel Inquiry
         Body: [brief, gracious closing about their Chile travel plans]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         

@@ -7,6 +7,8 @@ from graph_state import ConversationState, EmailMessage
 import re
 import time
 
+delay = 7
+
 class ClientAgent:
     def __init__(self, persona_data: Dict, llm: ChatGoogleGenerativeAI):
         self.persona_data = persona_data
@@ -103,6 +105,7 @@ class ClientAgent:
                 """
                 
                 try:
+                    time.sleep(delay)
                     sentiment = float(self.llm.invoke(sentiment_prompt).content.strip())
                     state["interest_level"] = max(0, min(1, state["interest_level"] + sentiment * 0.2))
                 except:
@@ -137,7 +140,7 @@ class ClientAgent:
         Subject: [subject line]
         Body: [email body with appropriate greeting and sign-off]
         """
-        
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -202,7 +205,7 @@ class ClientAgent:
         Subject: Re: [previous subject]
         Body: [email responding with all requested information]
         """
-        
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -261,7 +264,7 @@ class ClientAgent:
         Subject: Re: [previous subject]
         Body: [natural response]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -307,7 +310,7 @@ class ClientAgent:
         Subject: Re: [previous subject]
         Body: [decision email]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
@@ -348,7 +351,7 @@ class ClientAgent:
         Subject: Re: [previous subject] - One more thing
         Body: [brief email mentioning the forgotten detail]
         """
-        time.sleep(10)
+        time.sleep(delay)
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         

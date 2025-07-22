@@ -18,14 +18,14 @@ from companies import COMPANIES
 
 load_dotenv()
 
-delay = 15
+delay = 7
 
 class ConversationOrchestrator:
     def __init__(self, api_key: str):
         """Initialize orchestrator with LangGraph"""
         genai.configure(api_key=api_key)
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.0-flash",
+            model="gemini-2.0-flash-lite",
             google_api_key=api_key
         )
         
@@ -70,6 +70,9 @@ class ConversationOrchestrator:
         """Wrapper to run Wandero agent turn"""
         async def wandero_turn(state: ConversationState) -> ConversationState:
             # Determine Wandero action based on state
+
+            await asyncio.sleep(delay)
+
             if not state.get("messages"):
                 return agent.send_introduction(state)
             
@@ -120,6 +123,8 @@ class ConversationOrchestrator:
         """Wrapper to run Client agent turn"""
         async def client_turn(state: ConversationState) -> ConversationState:
             # Run client agent graph
+            await asyncio.sleep(delay)
+
             result = await agent.graph.ainvoke(state)
             await asyncio.sleep(delay)
             return result
