@@ -1,7 +1,7 @@
 import asyncio
 import random
 from typing import Dict, List, Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import logging
 import re
 
@@ -37,7 +37,7 @@ class InteractiveClientAgent:
         
         # Initialize LLM
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.0-flash-exp",
+            model="gemini-2.5-flash",
             google_api_key=google_api_key
         )
         
@@ -119,6 +119,8 @@ class InteractiveClientAgent:
     
     async def run_conversation_loop(self):
         """Main conversation loop - monitors for Wandero responses and replies"""
+        conversation_start_time = datetime.now(timezone.utc)
+
         logger.info("👀 Starting conversation monitoring...")
         logger.info("   Checking for new emails every 30 seconds...")
         logger.info("   Press Ctrl+C to stop")
@@ -129,7 +131,10 @@ class InteractiveClientAgent:
                 check_count += 1
                 
                 # Check for new emails from Wandero
-                new_emails = self.gmail_client.get_new_emails(self.wandero_email)
+                new_emails = self.gmail_client.get_new_emails(
+                    from_email = self.wandero_email,
+                    since_timestamp = conversation_start_time
+                )
                 
                 # Filter out already processed emails
                 state = self.state_manager.get_state()

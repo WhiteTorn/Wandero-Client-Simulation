@@ -135,62 +135,69 @@ Subject: {subject}
             logger.error(f"❌ Unexpected error sending email: {str(e)}")
             return {'success': False, 'error': str(e)}
     
-    def get_new_emails(self, from_email: str, since_message_id: Optional[str] = None) -> List[Dict]:
+    def get_new_emails(self, from_email: str, since_timestamp: Optional[datetime] = None, since_message_id: Optional[str] = None) -> List[Dict]:
         """
         Get new emails from specific sender
-        
+
         Args:
             from_email: Email address to check for messages from
+            since_timestamp: Only get emails after this timestamp
             since_message_id: Only get emails after this message ID
-            
+
         Returns:
             List of email dictionaries
         """
         try:
             # Build query
             query = f'from:{from_email}'
-            if since_message_id:
-                # This is a simplified approach - in production you'd want better message tracking
-                pass
-                
+
+            # Add timestamp filter if provided
+            if since_timestamp:
+                # Convert to Gmail query format (seconds since epoch)
+                epoch_time = int(since_timestamp.timestamp())
+                query += f' after:{epoch_time}'
+
             # Search for messages
             results = self.service.users().messages().list(
                 userId='me',
                 q=query,
                 maxResults=10
             ).execute()
-            
+
             messages = results.get('messages', [])
-            
+
             # Get full message details
             emails = []
             for msg in messages:
                 try:
                     full_msg = self.service.users().messages().get(
-                        userId='me', 
+                        userId='me',
                         id=msg['id'],
                         format='full'
                     ).execute()
-                    
+
                     # Parse email
                     parsed_email = self._parse_gmail_message(full_msg)
                     if parsed_email:
+                        # Additional timestamp filter if needed
+                        if since_timestamp and parsed_email['timestamp'] <= since_timestamp:
+                            continue
                         emails.append(parsed_email)
-                        
+
                 except Exception as e:
                     logger.error(f"Error parsing message {msg['id']}: {str(e)}")
                     continue
-                    
+
             # Sort by timestamp (newest first)
             emails.sort(key=lambda x: x['timestamp'], reverse=True)
-            
+
             if emails:
                 logger.info(f"📬 Found {len(emails)} email(s) from {from_email}")
                 for email_data in emails:
                     logger.info(f"   - {email_data['subject']} at {email_data['timestamp'].strftime('%H:%M:%S')}")
-            
+
             return emails
-            
+
         except Exception as e:
             logger.error(f"❌ Error checking emails: {str(e)}")
             return []
