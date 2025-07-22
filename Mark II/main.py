@@ -374,7 +374,7 @@ def main():
     
     # Test scenarios
     scenarios = [
-        ("budget_backpacker", "luxury_chile")
+        ("adventure_couple", "chile_adventures")
     ]
 
     # ,      # Mismatch
