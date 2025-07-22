@@ -2,3 +2,5 @@
 /venv
 /pycache
 \__pycache__
+credentials.json
+token.json

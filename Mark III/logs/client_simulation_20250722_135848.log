@@ -1,0 +1,42 @@
+13:58:48 | INFO     | [LOG] Logging to: logs/client_simulation_20250722_135848.log
+13:58:48 | INFO     | [SUCCESS] Environment check passed
+13:59:16 | INFO     | [AGENT] Initializing Interactive Client Agent...
+13:59:16 | INFO     | 🆕 Created fresh conversation state for Dr. Patricia Williams
+13:59:16 | INFO     |    Personality: independent
+13:59:16 | INFO     |    Budget: $3000-$5000
+13:59:16 | INFO     |    Interests: wine tours, hiking, local culture, photography
+13:59:16 | INFO     | 🤖 Interactive Client Agent initialized
+13:59:16 | INFO     |    Persona: Dr. Patricia Williams (solo_traveler)
+13:59:16 | INFO     |    Wandero: datozoidze777@gmail.com
+13:59:16 | INFO     |    Company: Family Fun Chile
+13:59:16 | INFO     | [START] Starting conversation...
+13:59:16 | INFO     | Starting OAuth 2.0 flow...
+14:00:29 | INFO     | "GET /?state=FSZL87n0GG4J5JEOe9L48cnMOw9U9q&code=4/0AVMBsJjNyU96chdX_JfF75HmJPd3OJQPZu70cLRLtv3VqFDuqc5qns_vsJntbZtPGLl76w&scope=https://www.googleapis.com/auth/gmail.send%20https://www.googleapis.com/auth/gmail.readonly%20https://www.googleapis.com/auth/gmail.modify HTTP/1.1" 200 65
+14:00:30 | INFO     | ✅ Successfully authenticated as 22100557@ibsu.edu.ge
+14:00:30 | INFO     | 🚀 Starting conversation as Dr. Patricia Williams
+14:00:30 | INFO     | 📧 Sending initial inquiry...
+14:00:32 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:00:32 | INFO     |    Subject: Inquiry Regarding Potential Travel in Chile
+14:00:32 | INFO     |    Time: 10:00:32
+14:00:32 | INFO     |    Message ID: 1983193e5e787fd6
+14:00:32 | INFO     | 💬 Message added to conversation
+14:00:32 | INFO     |    From: Dr. Patricia Williams
+14:00:32 | INFO     |    Subject: Inquiry Regarding Potential Travel in Chile
+14:00:32 | INFO     | 🔄 Phase changed: initial → information_gathering
+14:00:32 | INFO     | ✅ Initial inquiry sent successfully!
+14:00:32 | INFO     | [MONITOR] Starting conversation monitoring loop...
+14:00:32 | INFO     | 👀 Starting conversation monitoring...
+14:00:32 | INFO     |    Checking for new emails every 30 seconds...
+14:00:32 | INFO     |    Press Ctrl+C to stop
+14:03:04 | INFO     | 📬 Found 1 email(s) from datozoidze777@gmail.com
+14:03:04 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:03:04 | INFO     | 📬 Processing 1 new email(s)...
+14:03:04 | INFO     | 📖 Processing email from Wandero:
+14:03:04 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:03:04 | INFO     |    Received: 10:02:21
+14:03:04 | INFO     | 💬 Message added to conversation
+14:03:04 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:03:04 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:03:07 | INFO     | 🔄 Phase changed: information_gathering → negotiation
+14:03:07 | INFO     | ⏱️  Wandero responded in 1.8 minutes
+14:03:07 | INFO     | ⏳ Waiting 43.5 minutes before responding (persona behavior: independent)

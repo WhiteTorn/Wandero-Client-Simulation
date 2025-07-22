@@ -1,0 +1,13 @@
+# Existing dependencies (from the Mark II code)
+langchain-google-genai
+langgraph
+python-dotenv
+
+# Gmail API dependencies
+google-auth==2.25.2
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.2.0
+google-api-python-client==2.112.0
+
+# Additional utilities
+asyncio-throttle==1.0.2

@@ -1,0 +1,13 @@
+13:56:28 | INFO     | [LOG] Logging to: logs/client_simulation_20250722_135628.log
+13:56:28 | INFO     | [SUCCESS] Environment check passed
+13:56:58 | INFO     | [AGENT] Initializing Interactive Client Agent...
+13:56:58 | INFO     | 🆕 Created fresh conversation state for Dr. Patricia Williams
+13:56:58 | INFO     |    Personality: independent
+13:56:58 | INFO     |    Budget: $3000-$5000
+13:56:58 | INFO     |    Interests: wine tours, hiking, local culture, photography
+13:56:58 | INFO     | 🤖 Interactive Client Agent initialized
+13:56:58 | INFO     |    Persona: Dr. Patricia Williams (solo_traveler)
+13:56:58 | INFO     |    Wandero: datozoidze777@gmail.com
+13:56:58 | INFO     |    Company: Family Fun Chile
+13:56:58 | INFO     | [START] Starting conversation...
+13:56:58 | INFO     | Starting OAuth 2.0 flow...

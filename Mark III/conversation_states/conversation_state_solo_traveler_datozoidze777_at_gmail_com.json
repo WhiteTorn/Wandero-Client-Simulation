@@ -1,0 +1,95 @@
+{
+  "persona_type": "solo_traveler",
+  "persona_data": {
+    "name": "Dr. Patricia Williams",
+    "personality": "independent",
+    "travel_group": "solo",
+    "interests": [
+      "wine tours",
+      "hiking",
+      "local culture",
+      "photography"
+    ],
+    "worries": [
+      "safety as solo female",
+      "meeting other travelers"
+    ],
+    "budget": {
+      "min": 3000,
+      "max": 5000,
+      "flexibility": "moderate"
+    },
+    "travel_dates": "in 2-3 months",
+    "preferred_destinations": [
+      "Chile",
+      "Argentina"
+    ],
+    "special_requirements": [
+      "prefer small group tours",
+      "women-only dorms if hostels"
+    ],
+    "decision_style": "analytical, appreciates details, negotiates smartly"
+  },
+  "wandero_email": "datozoidze777@gmail.com",
+  "messages": [
+    {
+      "id": "1983193e5e787fd6",
+      "thread_id": "1983193e5e787fd6",
+      "subject": "Inquiry Regarding Potential Travel in Chile",
+      "body": "Dear Family Fun Chile Team,\n\nI am writing to express my interest in exploring Chile. I've been researching various travel options and your agency, with its focus on family-oriented and educational experiences, caught my attention.\n\nWhile I would be traveling solo, I am particularly interested in tours that incorporate local culture, opportunities for photography, and perhaps some light to moderate hiking. I am also intrigued by the possibility of a wine tour.\n\nCould you provide me with a general overview of the types of tours you offer that might align with these interests?\n\nThank you for your time and consideration. I look forward to hearing from you.\n\nSincerely,\n\nDr. Patricia Williams",
+      "sender": "Dr. Patricia Williams",
+      "timestamp": "2025-07-22T10:00:32.720182+00:00"
+    },
+    {
+      "id": "1983195c0ac6f38c",
+      "thread_id": "1983193e5e787fd6",
+      "subject": "Re: Inquiry Regarding Potential Travel in Chile",
+      "body": "Dear Dr. Williams,\r\n\r\nThank you so much for reaching out to Family Fun Chile! I'm Sofia Vargas,\r\nand I'm thrilled to help you discover the wonders of our beautiful country.\r\n\r\nWhile we specialize in family adventures, we absolutely love creating\r\npersonalized experiences for solo travelers who appreciate our approach to\r\nsafe, educational, and culturally immersive tours. Your interests in local\r\nculture, photography, and light hiking align perfectly with many of our\r\nofferings, and yes - we can definitely arrange some excellent wine tours in\r\nour renowned valleys!\r\n\r\nWhat makes us special is our commitment to authentic experiences with\r\nexpert local guides who truly understand Chile's rich heritage. We pride\r\nourselves on flexible timing, small group sizes, and our ability to adapt\r\ntours to individual interests - whether you're traveling with family or\r\nexploring solo.\r\n\r\nTo create the perfect Chilean adventure for you, I'd love to learn more\r\nabout your travel plans:\r\n- When are you hoping to visit Chile? (This helps us recommend the best\r\nexperiences for each season)\r\n- How many days were you thinking of exploring with us?\r\n- What's your approximate budget per day? (This helps us tailor the perfect\r\nmix of experiences)\r\n- Besides culture, photography, hiking, and wine, are there any specific\r\nplaces or experiences on your Chile bucket list?\r\n\r\nI'm already excited thinking about the incredible journey we can create for\r\nyou - from the colorful streets of Valpara\u00edso perfect for photography, to\r\ngentle hikes in the Lake District, and of course, exclusive tastings in our\r\nworld-class wine regions!\r\n\r\nLooking forward to hearing from you soon!\r\n\r\nWarm regards,\r\n\r\nSofia Vargas\r\nFamily Fun Chile\r\nYour Gateway to Authentic Chilean Adventures\r\n\r\nP.S. Did you know Chile has over 4,000 miles of coastline and the world's\r\ndriest desert? There's so much to explore!\r\n\r\nOn Tue, Jul 22, 2025 at 2:00\u202fPM <22100557@ibsu.edu.ge> wrote:\r\n\r\n> Dear Family Fun Chile Team,\r\n>\r\n> I am writing to express my interest in exploring Chile. I've been\r\n> researching various travel options and your agency, with its focus on\r\n> family-oriented and educational experiences, caught my attention.\r\n>\r\n> While I would be traveling solo, I am particularly interested in tours\r\n> that incorporate local culture, opportunities for photography, and\r\n> perhaps some light to moderate hiking. I am also intrigued by the\r\n> possibility of a wine tour.\r\n>\r\n> Could you provide me with a general overview of the types of tours you\r\n> offer that might align with these interests?\r\n>\r\n> Thank you for your time and consideration. I look forward to hearing from\r\n> you.\r\n>\r\n> Sincerely,\r\n>\r\n> Dr. Patricia Williams\r\n>\r\n> --\r\n>\r\n>\r\n> *Disclaimer*\r\n> This\r\n>  email and attachments (if any), is for the exclusive\r\n> and confidential\r\n> use of the addressee(s) and may contain legally\r\n> privileged information.\r\n> Any other distribution, use or reproduction\r\n> without the sender\u2019s prior\r\n> consent is unauthorized and strictly\r\n> prohibited. If you have received\r\n> this message in error, please notify the\r\n> sender by email immediately and\r\n>  delete this message from your computer.\r\n>\r\n> IBSU\r\n>  accepts no liability for the content of this email, or for the\r\n> consequences of any actions taken on the basis of the information\r\n> provided, unless that information is subsequently confirmed in writing.\r\n>\r\n",
+      "sender": "Wandero Agent <datozoidze777@gmail.com>",
+      "timestamp": "2025-07-22T10:02:21+00:00"
+    }
+  ],
+  "last_processed_message_id": "1983195c0ac6f38c",
+  "client_name": "Dr. Patricia Williams",
+  "client_email": "dr..patricia.williams@email.com",
+  "client_personality": "independent",
+  "client_budget": null,
+  "client_travel_dates": null,
+  "client_group_size": null,
+  "client_interests": [],
+  "client_concerns": [
+    "safety as solo female",
+    "meeting other travelers"
+  ],
+  "client_special_requirements": [
+    "prefer small group tours",
+    "women-only dorms if hostels"
+  ],
+  "company_info": {},
+  "phase": "negotiation",
+  "interest_level": 0.6,
+  "abandonment_risk": 0.1,
+  "proposals_received": [],
+  "current_offer": null,
+  "discounts_mentioned": 0.0,
+  "shared_info": {
+    "budget": false,
+    "dates": false,
+    "group_size": false,
+    "interests": false,
+    "special_requirements": false
+  },
+  "pending_questions": [],
+  "forgot_to_mention": [
+    "prefer small group tours",
+    "women-only dorms if hostels"
+  ],
+  "conversation_start": "2025-07-22T13:59:16.908159",
+  "last_client_response": "2025-07-22T10:00:32.720182+00:00",
+  "last_wandero_response": "2025-07-22T10:02:21+00:00",
+  "wandero_response_times": [
+    1.8046636333333335
+  ],
+  "ready_to_book": false,
+  "conversation_ended": false
+}

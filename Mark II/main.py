@@ -125,7 +125,7 @@ class ConversationOrchestrator:
             # Run client agent graph
             await asyncio.sleep(delay)
 
-            result = await agent.graph.ainvoke(state)
+            result = await agent.graph.ainvoke(state, {"recursion_limit": 25})
             await asyncio.sleep(delay)
             return result
             
@@ -138,7 +138,7 @@ class ConversationOrchestrator:
             return state
             
         # Check message count - but higher limit
-        if len(state.get("messages", [])) > 20:
+        if len(state.get("messages", [])) > 10:
             state["conversation_ended"] = True
             return state
             
@@ -227,7 +227,7 @@ class ConversationOrchestrator:
         graph = self.create_conversation_graph(persona_data, company_data)
         
         # Run conversation
-        final_state = await graph.ainvoke(initial_state)
+        final_state = await graph.ainvoke(initial_state, {"recursion_limit": 25})
         await asyncio.sleep(delay)
         # Display conversation
         self._display_conversation(final_state)
