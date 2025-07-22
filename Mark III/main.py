@@ -86,6 +86,24 @@ def get_user_input():
             break
         print(f"[ERROR] Invalid persona type. Choose from: {', '.join(PERSONAS.keys())}")
     
+    # Get mode selection
+    print("\n[MODE] Choose response timing mode:")
+    print("  1. TEST MODE - Immediate responses (for fast testing)")
+    print("  2. DEMO MODE - Realistic timing based on persona (for demonstrations)")
+    
+    while True:
+        mode_choice = input("Select mode (1 or 2): ").strip()
+        if mode_choice == "1":
+            test_mode = True
+            print("[MODE] TEST MODE selected - Agent will respond immediately")
+            break
+        elif mode_choice == "2":
+            test_mode = False  
+            print("[MODE] DEMO MODE selected - Agent will use realistic timing")
+            break
+        else:
+            print("[ERROR] Please enter 1 or 2")
+    
     # Get Wandero email
     while True:
         wandero_email = input("\nEnter Wandero agent email address: ").strip()
@@ -110,7 +128,7 @@ def get_user_input():
         "specialties": specialties
     }
     
-    return persona_type, wandero_email, company_info
+    return persona_type, wandero_email, company_info, test_mode
 
 def check_environment():
     """Check required environment variables and files"""
@@ -139,14 +157,15 @@ async def run_simulation():
     logger = logging.getLogger(__name__)
     
     try:
-        # Get user input
-        persona_type, wandero_email, company_info = get_user_input()
+        # Get user input (now includes test_mode)
+        persona_type, wandero_email, company_info, test_mode = get_user_input()
         
         # Get API key
         google_api_key = os.getenv("GOOGLE_API_KEY")
         
         # Display simulation info
-        print(f"\n[START] STARTING SIMULATION")
+        mode_text = "TEST MODE (immediate)" if test_mode else "DEMO MODE (realistic timing)"
+        print(f"\n[START] STARTING SIMULATION - {mode_text}")
         print(f"   Persona: {PERSONAS[persona_type]['name']} ({persona_type})")
         print(f"   Wandero: {wandero_email}")
         print(f"   Company: {company_info['name']} ({company_info['country']})")
@@ -160,7 +179,8 @@ async def run_simulation():
             wandero_email=wandero_email,
             company_info=company_info,
             google_api_key=google_api_key,
-            gmail_credentials_file="credentials.json"
+            gmail_credentials_file="credentials.json",
+            test_mode=test_mode  # Add this parameter
         )
         
         # Start conversation

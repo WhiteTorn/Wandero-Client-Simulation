@@ -13,7 +13,8 @@ logger = logging.getLogger(__name__)
 
 class InteractiveClientAgent:
     def __init__(self, persona_type: str, wandero_email: str, company_info: Dict, 
-                 google_api_key: str, gmail_credentials_file: str = 'credentials.json'):
+                 google_api_key: str, gmail_credentials_file: str = 'credentials.json',
+                 test_mode: bool = False):
         """
         Initialize Interactive Client Agent
         
@@ -23,10 +24,12 @@ class InteractiveClientAgent:
             company_info: Information about the travel company
             google_api_key: Google API key for Gemini
             gmail_credentials_file: Path to Gmail OAuth credentials
+            test_mode: If True, responds immediately for testing. If False, uses realistic timing
         """
         self.persona_type = persona_type
         self.wandero_email = wandero_email
         self.company_info = company_info
+        self.test_mode = test_mode  # Add this line
         
         # Initialize components
         self.gmail_client = GmailClient(gmail_credentials_file)
@@ -42,7 +45,8 @@ class InteractiveClientAgent:
         self.persona_data = self.state_manager.get_state()['persona_data']
         self.client_name = self.persona_data['name']
         
-        logger.info(f"🤖 Interactive Client Agent initialized")
+        mode_text = "TEST MODE (immediate responses)" if test_mode else "DEMO MODE (realistic timing)"
+        logger.info(f"[AGENT] Interactive Client Agent initialized - {mode_text}")
         logger.info(f"   Persona: {self.client_name} ({persona_type})")
         logger.info(f"   Wandero: {wandero_email}")
         logger.info(f"   Company: {company_info.get('name', 'Unknown')}")
@@ -255,10 +259,13 @@ class InteractiveClientAgent:
     async def generate_and_send_response(self, wandero_email: Dict):
         """Generate response based on persona and send it"""
         try:
-            # Calculate response delay based on persona
+            # Calculate response delay based on mode
             delay_minutes = self.calculate_response_delay()
             
-            logger.info(f"⏳ Waiting {delay_minutes:.1f} minutes before responding (persona behavior: {self.persona_data.get('personality', 'standard')})")
+            if self.test_mode:
+                logger.info(f"[TEST] Responding immediately (test mode)")
+            else:
+                logger.info(f"[DEMO] Waiting {delay_minutes:.1f} minutes before responding (persona behavior: {self.persona_data.get('personality', 'standard')})")
             
             # Wait for calculated delay
             await asyncio.sleep(delay_minutes * 60)
@@ -287,20 +294,25 @@ class InteractiveClientAgent:
                 
                 self.state_manager.add_message(message)
                 
-                # Random chance to send a "forgot to mention" follow-up
-                if random.random() < 0.15:  # 15% chance
+                # Random chance to send a "forgot to mention" follow-up (only in demo mode)
+                if not self.test_mode and random.random() < 0.15:  # 15% chance
                     await self.maybe_send_forgotten_detail(result['thread_id'])
                 
-                logger.info("✅ Response sent successfully!")
+                logger.info("[SUCCESS] Response sent successfully!")
                 
             else:
-                logger.error(f"❌ Failed to send response: {result['error']}")
+                logger.error(f"[ERROR] Failed to send response: {result['error']}")
                 
         except Exception as e:
-            logger.error(f"❌ Error generating/sending response: {str(e)}")
+            logger.error(f"[ERROR] Error generating/sending response: {str(e)}")
     
     def calculate_response_delay(self) -> float:
         """Calculate response delay in minutes based on persona"""
+        # TEST MODE: Immediate response
+        if self.test_mode:
+            return 0.1  # Just 6 seconds for processing
+        
+        # DEMO MODE: Realistic timing (existing logic)
         state = self.state_manager.get_state()
         base_minutes = 60  # Base 1 hour
         

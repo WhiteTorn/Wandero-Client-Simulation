@@ -1,0 +1,597 @@
+14:07:26 | INFO     | [LOG] Logging to: logs/client_simulation_20250722_140726.log
+14:07:26 | INFO     | [SUCCESS] Environment check passed
+14:08:02 | INFO     | [AGENT] Initializing Interactive Client Agent...
+14:08:02 | INFO     | 📁 Loaded existing conversation state from conversation_state_solo_traveler_datozoidze777_at_gmail_com.json
+14:08:02 | INFO     |    Phase: negotiation
+14:08:02 | INFO     |    Messages: 2
+14:08:02 | INFO     |    Interest Level: 0.6
+14:08:02 | INFO     | [AGENT] Interactive Client Agent initialized - TEST MODE (immediate responses)
+14:08:02 | INFO     |    Persona: Dr. Patricia Williams (solo_traveler)
+14:08:02 | INFO     |    Wandero: datozoidze777@gmail.com
+14:08:02 | INFO     |    Company: Family Fun Chile
+14:08:02 | INFO     | [START] Starting conversation...
+14:08:03 | INFO     | ✅ Successfully authenticated as 22100557@ibsu.edu.ge
+14:08:03 | INFO     | 🚀 Starting conversation as Dr. Patricia Williams
+14:08:03 | INFO     | 📋 Resuming existing conversation (2 messages)
+14:08:03 | INFO     | 🔄 Resuming conversation...
+14:08:03 | INFO     | [MONITOR] Starting conversation monitoring loop...
+14:08:03 | INFO     | 👀 Starting conversation monitoring...
+14:08:03 | INFO     |    Checking for new emails every 30 seconds...
+14:08:03 | INFO     |    Press Ctrl+C to stop
+14:08:03 | INFO     | 📬 Found 1 email(s) from datozoidze777@gmail.com
+14:08:03 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:08:34 | INFO     | 📬 Found 1 email(s) from datozoidze777@gmail.com
+14:08:34 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:09:05 | INFO     | 📬 Found 1 email(s) from datozoidze777@gmail.com
+14:09:05 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:09:35 | INFO     | 📬 Found 2 email(s) from datozoidze777@gmail.com
+14:09:35 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:09:35 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:09:35 | INFO     | 📬 Processing 1 new email(s)...
+14:09:35 | INFO     | 📖 Processing email from Wandero:
+14:09:35 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:09:35 | INFO     |    Received: 10:09:18
+14:09:35 | INFO     | 💬 Message added to conversation
+14:09:35 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:09:35 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:09:38 | INFO     | 🔄 Phase changed: negotiation → negotiation
+14:09:38 | INFO     | ⏱️  Wandero responded in 8.8 minutes
+14:09:38 | INFO     | [TEST] Responding immediately (test mode)
+14:09:47 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:09:47 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:09:47 | INFO     |    Time: 10:09:47
+14:09:47 | INFO     |    Message ID: 198319c5c0c8955d
+14:09:47 | INFO     | 💬 Message added to conversation
+14:09:47 | INFO     |    From: Dr. Patricia Williams
+14:09:47 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:09:47 | INFO     | [SUCCESS] Response sent successfully!
+14:10:20 | INFO     | 📬 Found 2 email(s) from datozoidze777@gmail.com
+14:10:20 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:10:20 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:10:51 | INFO     | 📬 Found 2 email(s) from datozoidze777@gmail.com
+14:10:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:10:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:11:22 | INFO     | 📬 Found 3 email(s) from datozoidze777@gmail.com
+14:11:22 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:11:22 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:11:22 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:11:22 | INFO     | 📬 Processing 1 new email(s)...
+14:11:22 | INFO     | 📖 Processing email from Wandero:
+14:11:22 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:11:22 | INFO     |    Received: 10:10:51
+14:11:22 | INFO     | 💬 Message added to conversation
+14:11:22 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:11:22 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:11:25 | INFO     | ⏱️  Wandero responded in 1.1 minutes
+14:11:25 | INFO     | [TEST] Responding immediately (test mode)
+14:11:34 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:11:34 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:11:34 | INFO     |    Time: 10:11:34
+14:11:34 | INFO     |    Message ID: 198319dffeec515f
+14:11:34 | INFO     | 💬 Message added to conversation
+14:11:34 | INFO     |    From: Dr. Patricia Williams
+14:11:34 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:11:34 | INFO     | [SUCCESS] Response sent successfully!
+14:12:07 | INFO     | 📬 Found 3 email(s) from datozoidze777@gmail.com
+14:12:07 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:12:07 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:12:07 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:12:38 | INFO     | 📬 Found 3 email(s) from datozoidze777@gmail.com
+14:12:38 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:12:38 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:12:38 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:13:10 | INFO     | 📬 Found 4 email(s) from datozoidze777@gmail.com
+14:13:10 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:13:10 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:13:10 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:13:10 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:13:10 | INFO     | 📬 Processing 1 new email(s)...
+14:13:10 | INFO     | 📖 Processing email from Wandero:
+14:13:10 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:13:10 | INFO     |    Received: 10:12:44
+14:13:10 | INFO     | 💬 Message added to conversation
+14:13:10 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:13:10 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:13:12 | INFO     | ⏱️  Wandero responded in 1.2 minutes
+14:13:12 | INFO     | [TEST] Responding immediately (test mode)
+14:13:21 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:13:21 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:13:21 | INFO     |    Time: 10:13:21
+14:13:21 | INFO     |    Message ID: 198319fa1ad0827a
+14:13:21 | INFO     | 💬 Message added to conversation
+14:13:21 | INFO     |    From: Dr. Patricia Williams
+14:13:21 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:13:21 | INFO     | [SUCCESS] Response sent successfully!
+14:13:55 | INFO     | 📬 Found 4 email(s) from datozoidze777@gmail.com
+14:13:55 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:13:55 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:13:55 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:13:55 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:14:26 | INFO     | 📬 Found 4 email(s) from datozoidze777@gmail.com
+14:14:26 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:14:26 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:14:26 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:14:26 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:14:58 | INFO     | 📬 Found 5 email(s) from datozoidze777@gmail.com
+14:14:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:14:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:14:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:14:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:14:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:14:58 | INFO     | 📬 Processing 1 new email(s)...
+14:14:58 | INFO     | 📖 Processing email from Wandero:
+14:14:58 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:14:58 | INFO     |    Received: 10:14:23
+14:14:58 | INFO     | 💬 Message added to conversation
+14:14:58 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:14:58 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:15:00 | INFO     | ⏱️  Wandero responded in 1.0 minutes
+14:15:00 | INFO     | [TEST] Responding immediately (test mode)
+14:15:09 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:15:09 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:15:09 | INFO     |    Time: 10:15:09
+14:15:09 | INFO     |    Message ID: 19831a1491611d67
+14:15:09 | INFO     | 💬 Message added to conversation
+14:15:09 | INFO     |    From: Dr. Patricia Williams
+14:15:09 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:15:09 | INFO     | [SUCCESS] Response sent successfully!
+14:15:43 | INFO     | 📬 Found 5 email(s) from datozoidze777@gmail.com
+14:15:43 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:15:43 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:15:43 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:15:43 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:15:43 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:16:15 | INFO     | 📬 Found 5 email(s) from datozoidze777@gmail.com
+14:16:15 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:16:15 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:16:15 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:16:15 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:16:15 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:16:47 | INFO     | 📬 Found 5 email(s) from datozoidze777@gmail.com
+14:16:47 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:16:47 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:16:47 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:16:47 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:16:47 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:17:18 | INFO     | 📬 Found 5 email(s) from datozoidze777@gmail.com
+14:17:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:17:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:17:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:17:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:17:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:17:50 | INFO     | 📬 Found 5 email(s) from datozoidze777@gmail.com
+14:17:50 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:17:50 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:17:50 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:17:50 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:17:50 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:18:22 | INFO     | 📬 Found 5 email(s) from datozoidze777@gmail.com
+14:18:22 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:18:22 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:18:22 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:18:22 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:18:22 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:18:54 | INFO     | 📬 Found 6 email(s) from datozoidze777@gmail.com
+14:18:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:18:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:18:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:18:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:18:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:18:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:18:54 | INFO     | 📬 Processing 1 new email(s)...
+14:18:54 | INFO     | 📖 Processing email from Wandero:
+14:18:54 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:18:54 | INFO     |    Received: 10:18:16
+14:18:54 | INFO     | 💬 Message added to conversation
+14:18:54 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:18:54 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:18:57 | INFO     | 🔄 Phase changed: negotiation → proposal_review
+14:18:57 | INFO     | ⏱️  Wandero responded in 3.1 minutes
+14:18:57 | INFO     | [TEST] Responding immediately (test mode)
+14:19:06 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:19:06 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:19:06 | INFO     |    Time: 10:19:06
+14:19:06 | INFO     |    Message ID: 19831a4e572b09e4
+14:19:06 | INFO     | 💬 Message added to conversation
+14:19:06 | INFO     |    From: Dr. Patricia Williams
+14:19:06 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:19:06 | INFO     | [SUCCESS] Response sent successfully!
+14:19:40 | INFO     | 📬 Found 6 email(s) from datozoidze777@gmail.com
+14:19:40 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:19:40 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:19:40 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:19:40 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:19:40 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:19:40 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:20:12 | INFO     | 📬 Found 6 email(s) from datozoidze777@gmail.com
+14:20:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:20:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:20:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:20:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:20:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:20:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:20:45 | INFO     | 📬 Found 7 email(s) from datozoidze777@gmail.com
+14:20:45 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:20:45 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:20:45 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:20:45 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:20:45 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:20:45 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:20:45 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:20:45 | INFO     | 📬 Processing 1 new email(s)...
+14:20:45 | INFO     | 📖 Processing email from Wandero:
+14:20:45 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:20:45 | INFO     |    Received: 10:20:02
+14:20:45 | INFO     | 💬 Message added to conversation
+14:20:45 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:20:45 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:20:47 | INFO     | 🔄 Phase changed: proposal_review → proposal_review
+14:20:47 | INFO     | 📈 Interest level: 1.00 → 1.10
+14:20:47 | INFO     | ⏱️  Wandero responded in 0.9 minutes
+14:20:47 | INFO     | [TEST] Responding immediately (test mode)
+14:20:56 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:20:56 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:20:56 | INFO     |    Time: 10:20:56
+14:20:56 | INFO     |    Message ID: 19831a693c1b44f0
+14:20:56 | INFO     | 💬 Message added to conversation
+14:20:56 | INFO     |    From: Dr. Patricia Williams
+14:20:56 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:20:56 | INFO     | [SUCCESS] Response sent successfully!
+14:21:31 | INFO     | 📬 Found 7 email(s) from datozoidze777@gmail.com
+14:21:31 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:21:31 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:21:31 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:21:31 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:21:31 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:21:31 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:21:31 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:22:03 | INFO     | 📬 Found 7 email(s) from datozoidze777@gmail.com
+14:22:03 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:22:03 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:22:03 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:22:03 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:22:03 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:22:03 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:22:03 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:22:36 | INFO     | 📬 Found 8 email(s) from datozoidze777@gmail.com
+14:22:36 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:22:36 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:22:36 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:22:36 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:22:36 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:22:36 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:22:36 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:22:36 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:22:36 | INFO     | 📬 Processing 1 new email(s)...
+14:22:36 | INFO     | 📖 Processing email from Wandero:
+14:22:36 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:22:36 | INFO     |    Received: 10:22:14
+14:22:36 | INFO     | 💬 Message added to conversation
+14:22:36 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:22:36 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:22:38 | INFO     | 📈 Interest level: 1.00 → 1.10
+14:22:38 | INFO     | ⏱️  Wandero responded in 1.3 minutes
+14:22:38 | INFO     | [TEST] Responding immediately (test mode)
+14:22:46 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:22:46 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:22:46 | INFO     |    Time: 10:22:46
+14:22:46 | INFO     |    Message ID: 19831a8408a253bb
+14:22:46 | INFO     | 💬 Message added to conversation
+14:22:46 | INFO     |    From: Dr. Patricia Williams
+14:22:46 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:22:46 | INFO     | [SUCCESS] Response sent successfully!
+14:23:21 | INFO     | 📬 Found 8 email(s) from datozoidze777@gmail.com
+14:23:21 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:23:21 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:23:21 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:23:21 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:23:21 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:23:21 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:23:21 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:23:21 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:23:54 | INFO     | 📬 Found 8 email(s) from datozoidze777@gmail.com
+14:23:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:23:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:23:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:23:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:23:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:23:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:23:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:23:54 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:24:27 | INFO     | 📬 Found 9 email(s) from datozoidze777@gmail.com
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:24:27 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:24:27 | INFO     | 📬 Processing 1 new email(s)...
+14:24:27 | INFO     | 📖 Processing email from Wandero:
+14:24:27 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:24:27 | INFO     |    Received: 10:23:40
+14:24:27 | INFO     | 💬 Message added to conversation
+14:24:27 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:24:27 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:24:29 | INFO     | 🔄 Phase changed: proposal_review → proposal_review
+14:24:29 | INFO     | ⏱️  Wandero responded in 0.9 minutes
+14:24:29 | INFO     | [TEST] Responding immediately (test mode)
+14:24:38 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:24:38 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:24:38 | INFO     |    Time: 10:24:38
+14:24:38 | INFO     |    Message ID: 19831a9f43211208
+14:24:38 | INFO     | 💬 Message added to conversation
+14:24:38 | INFO     |    From: Dr. Patricia Williams
+14:24:38 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:24:38 | INFO     | [SUCCESS] Response sent successfully!
+14:25:13 | INFO     | 📬 Found 9 email(s) from datozoidze777@gmail.com
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:25:13 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:25:13 | INFO     | ⏱️  Still waiting for response from Wandero... (checked 30 times)
+14:25:46 | INFO     | 📬 Found 9 email(s) from datozoidze777@gmail.com
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:25:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:26:19 | INFO     | 📬 Found 9 email(s) from datozoidze777@gmail.com
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:26:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:26:51 | INFO     | 📬 Found 9 email(s) from datozoidze777@gmail.com
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:26:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:27:24 | INFO     | 📬 Found 9 email(s) from datozoidze777@gmail.com
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:27:24 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:27:57 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:27:57 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:27:57 | INFO     | 📬 Processing 1 new email(s)...
+14:27:57 | INFO     | 📖 Processing email from Wandero:
+14:27:57 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:27:57 | INFO     |    Received: 10:27:26
+14:27:57 | INFO     | 💬 Message added to conversation
+14:27:57 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:27:57 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:28:00 | INFO     | 🔄 Phase changed: proposal_review → proposal_review
+14:28:00 | INFO     | 📈 Interest level: 1.00 → 1.10
+14:28:00 | INFO     | ⏱️  Wandero responded in 2.8 minutes
+14:28:00 | INFO     | [TEST] Responding immediately (test mode)
+14:28:09 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:28:09 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:28:09 | INFO     |    Time: 10:28:09
+14:28:09 | INFO     |    Message ID: 19831ad2bcf83388
+14:28:09 | INFO     | 💬 Message added to conversation
+14:28:09 | INFO     |    From: Dr. Patricia Williams
+14:28:09 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:28:09 | INFO     | [SUCCESS] Response sent successfully!
+14:28:44 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:28:44 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:29:18 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:29:18 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:29:51 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:29:51 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:30:25 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:30:25 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:30:58 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:30:58 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:02:21
+14:30:58 | INFO     | ⏱️  Still waiting for response from Wandero... (checked 40 times)
+14:31:32 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:30:58
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:31:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:31:32 | INFO     | 📬 Processing 1 new email(s)...
+14:31:32 | INFO     | 📖 Processing email from Wandero:
+14:31:32 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:31:32 | INFO     |    Received: 10:30:58
+14:31:32 | INFO     | 💬 Message added to conversation
+14:31:32 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:31:32 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:31:35 | INFO     | 📈 Interest level: 1.00 → 1.10
+14:31:35 | INFO     | ⏱️  Wandero responded in 2.8 minutes
+14:31:35 | INFO     | [TEST] Responding immediately (test mode)
+14:31:43 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:31:43 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:31:43 | INFO     |    Time: 10:31:43
+14:31:43 | INFO     |    Message ID: 19831b0723ea30d2
+14:31:43 | INFO     | 💬 Message added to conversation
+14:31:43 | INFO     |    From: Dr. Patricia Williams
+14:31:43 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:31:43 | INFO     | [SUCCESS] Response sent successfully!
+14:32:19 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:30:58
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:32:19 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:09:18
+14:32:52 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:32:31
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:30:58
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:32:52 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:32:52 | INFO     | 📬 Processing 1 new email(s)...
+14:32:52 | INFO     | 📖 Processing email from Wandero:
+14:32:52 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:32:52 | INFO     |    Received: 10:32:31
+14:32:52 | INFO     | 💬 Message added to conversation
+14:32:52 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:32:52 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:32:54 | INFO     | 🔄 Phase changed: proposal_review → negotiation
+14:32:54 | INFO     | ⏱️  Wandero responded in 0.8 minutes
+14:32:54 | INFO     | [TEST] Responding immediately (test mode)
+14:33:04 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:33:04 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:33:04 | INFO     |    Time: 10:33:04
+14:33:04 | INFO     |    Message ID: 19831b1ab44283eb
+14:33:04 | INFO     | 💬 Message added to conversation
+14:33:04 | INFO     |    From: Dr. Patricia Williams
+14:33:04 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:33:04 | INFO     | [SUCCESS] Response sent successfully!
+14:33:39 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:32:31
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:30:58
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:33:39 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:34:12 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:32:31
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:30:58
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:34:12 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:10:51
+14:34:46 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:34:08
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:32:31
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:30:58
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:34:46 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
+14:34:46 | INFO     | 📬 Processing 1 new email(s)...
+14:34:46 | INFO     | 📖 Processing email from Wandero:
+14:34:46 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:34:46 | INFO     |    Received: 10:34:08
+14:34:46 | INFO     | 💬 Message added to conversation
+14:34:46 | INFO     |    From: Wandero Agent <datozoidze777@gmail.com>
+14:34:46 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:34:49 | INFO     | 🔄 Phase changed: negotiation → proposal_review
+14:34:49 | INFO     | 📈 Interest level: 1.00 → 1.10
+14:34:49 | INFO     | ⏱️  Wandero responded in 1.1 minutes
+14:34:49 | INFO     | [TEST] Responding immediately (test mode)
+14:34:57 | INFO     | 📧 EMAIL SENT to datozoidze777@gmail.com
+14:34:57 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:34:57 | INFO     |    Time: 10:34:57
+14:34:57 | INFO     |    Message ID: 19831b3674036cf7
+14:34:57 | INFO     | 💬 Message added to conversation
+14:34:57 | INFO     |    From: Dr. Patricia Williams
+14:34:57 | INFO     |    Subject: Re: Inquiry Regarding Potential Travel in Chile
+14:34:57 | INFO     | [SUCCESS] Response sent successfully!
+14:35:32 | INFO     | 📬 Found 10 email(s) from datozoidze777@gmail.com
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:34:08
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:32:31
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:30:58
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:27:26
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:23:40
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:22:14
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:20:02
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:18:16
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:14:23
+14:35:32 | INFO     |    - Re: Inquiry Regarding Potential Travel in Chile at 10:12:44
