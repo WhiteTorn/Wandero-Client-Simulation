@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-07-22T09:06:56.346625",
+  "total_scenarios": 1,
+  "outcomes": {
+    "BOOKING_CONFIRMED": 1
+  },
+  "avg_metrics": {
+    "avg_emails": 6.0,
+    "avg_interest": 1.0,
+    "booking_rate": 1.0
+  },
+  "scenarios": [
+    {
+      "scenario": "solo_traveler + luxury_chile",
+      "outcome": "BOOKING_CONFIRMED",
+      "metrics": {
+        "total_emails": 6,
+        "client_emails": 3,
+        "wandero_emails": 3,
+        "conversation_duration": "5:37:28.805366",
+        "avg_response_time": "0:56:14.800894",
+        "final_interest_level": 1,
+        "discounts_offered": 0.1,
+        "proposals_made": 1
+      },
+      "quality": {
+        "information_gathered": true,
+        "concerns_addressed": false,
+        "natural_flow": true,
+        "personality_match": true
+      }
+    }
+  ]
+}

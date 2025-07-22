@@ -4,7 +4,7 @@ COMPANIES = {
         "type": "luxury",
         "specialties": ["5-star hotels", "private tours", "gourmet dining", "helicopter tours"],
         "destinations": ["Santiago", "Wine Valleys", "Atacama", "Patagonia"],
-        "price_range": {"min": 500, "max": 1500, "per_day": True},
+        "price_range": {"min": 8000, "max": 16000, "per_day": True},
         "unique_selling_points": [
             "Exclusive access to private vineyards",
             "Michelin-starred dining experiences",

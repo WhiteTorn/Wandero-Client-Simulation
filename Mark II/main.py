@@ -69,33 +69,50 @@ class ConversationOrchestrator:
     def _wandero_turn_wrapper(self, agent: WanderoAgent):
         """Wrapper to run Wandero agent turn"""
         async def wandero_turn(state: ConversationState) -> ConversationState:
-            await asyncio.sleep(delay)
             # Determine Wandero action based on state
             if not state.get("messages"):
-                # First message - introduction
                 return agent.send_introduction(state)
             
             # Analyze last client message
             last_client_msg = None
             for msg in reversed(state["messages"]):
-                if msg["sender"] != state.get("agent_name", ""):
+                if msg["sender"] == state["client_name"]:
                     last_client_msg = msg
                     break
                     
             if not last_client_msg:
                 return state
-                
+            
+            # Analyze client message content
+            client_text = last_client_msg["body"].lower()
+            
+            # Check for specific scenarios
+            if any(phrase in client_text for phrase in ["looking forward", "excited", "can't wait", "sounds amazing"]):
+                # Client is interested - don't abandon!
+                state["interest_level"] = max(state["interest_level"], 0.7)
+            
+            if any(word in client_text for word in ["goodbye", "not interested", "too expensive", "nevermind", "changed mind"]):
+                # Clear rejection
+                return agent.accept_decline(state)
+            
             # Route based on conversation state
             if not state.get("all_info_gathered"):
                 return agent.gather_all_details(state)
             elif state["phase"] == "discovery" and state.get("all_info_gathered"):
                 return agent.present_proposal(state)
-            elif state["phase"] == "proposal":
-                return agent.handle_negotiation(state)
+            elif state["phase"] in ["proposal", "negotiation"]:
+                # Client responded to proposal - handle their concerns/questions
+                if any(word in client_text for word in ["price", "cost", "budget", "expensive", "$"]):
+                    return agent.handle_price_discussion(state)
+                elif any(word in client_text for word in ["authentic", "local", "touristy", "real"]):
+                    return agent.address_authenticity_concerns(state)
+                else:
+                    return agent.handle_negotiation(state)
             elif state.get("ready_to_book"):
                 return agent.close_deal(state)
             else:
-                return agent.accept_decline(state)
+                # Default to continuing conversation
+                return agent.handle_negotiation(state)
                 
         return wandero_turn
     
@@ -110,20 +127,33 @@ class ConversationOrchestrator:
         return client_turn
     
     def _check_conversation_end(self, state: ConversationState) -> ConversationState:
-        """Check if conversation should end"""
-        # Check explicit end conditions
+        """Check if conversation should end - be more conservative"""
+        # Only end if explicitly ended
         if state.get("conversation_ended"):
             return state
             
-        # Check message count
-        if len(state.get("messages", [])) > 15:
+        # Check message count - but higher limit
+        if len(state.get("messages", [])) > 20:
             state["conversation_ended"] = True
             return state
             
-        # Check if client has low interest after proposal
-        if (state.get("phase") == "proposal" and 
-            state.get("interest_level", 0.5) < 0.3 and 
-            len(state.get("messages", [])) > 6):
+        # Don't end based on interest if client is still engaged
+        last_client_msg = None
+        for msg in reversed(state.get("messages", [])):
+            if msg["sender"] == state["client_name"]:
+                last_client_msg = msg["body"].lower()
+                break
+        
+        if last_client_msg:
+            # Check for engagement signals
+            engaged_phrases = ["looking forward", "excited", "sounds good", "tell me more", 
+                            "what about", "can you", "how much", "when can"]
+            if any(phrase in last_client_msg for phrase in engaged_phrases):
+                # Client is engaged - don't end!
+                return state
+                
+        # Only abandon if really low interest AND many messages
+        if (state.get("interest_level", 0.5) < 0.2 and len(state.get("messages", [])) > 10):
             state["abandonment_risk"] = 0.9
             state["conversation_ended"] = True
             
@@ -374,7 +404,7 @@ def main():
     
     # Test scenarios
     scenarios = [
-        ("adventure_couple", "chile_adventures")
+        ("budget_backpacker", "luxury_chile") # Should abondon.
     ]
 
     # ,      # Mismatch

@@ -148,7 +148,7 @@ class WanderoAgent:
             subject=subject,
             body=body,
             sender=f"{state['agent_name']} <{state['company_name']}>",
-            timestamp=state["current_time"] + response_delay,
+            timestamp=state.get("current_time", datetime.now()) + response_delay,
             sentiment=0.7
         )
         
@@ -350,26 +350,43 @@ class WanderoAgent:
     def accept_decline(self, state: ConversationState) -> ConversationState:
         """Gracefully accept client's decision to not book"""
         prompt = f"""
-        You are {state['agent_name']} responding to a client who decided not to book.
+        You are {state['agent_name']} from {state['company_name']}, a CHILE TRAVEL AGENCY.
+        
+        The client has decided not to book their Chile trip at this time.
         
         Write a gracious closing email that:
-        1. Thanks them for their time
-        2. Leaves the door open for future
-        3. Wishes them well
-        4. Provides your contact for future
+        1. Thanks them for considering Chile as a destination
+        2. Leaves the door open for future travel
+        3. Offers to help when they're ready
+        4. Mentions Chile specifically
         5. Stays professional and warm
         
-        Keep it brief and classy.
+        This is about TRAVEL, not event planning!
         
         Format:
-        Subject: Re: [previous subject]
-        Body: [brief, gracious closing]
+        Subject: Re: Your Chile Travel Inquiry
+        Body: [brief, gracious closing about their Chile travel plans]
         """
         
         response = self.llm.invoke(prompt).content
         subject, body = self._parse_email_response(response)
         
-        # Standard response time
+        # Fallback if LLM fails
+        if not body.strip() or "event" in body.lower():
+            body = f"""Dear {state['client_name']},
+
+    Thank you so much for considering {state['company_name']} for your Chile adventure. I understand that now might not be the right time for your trip.
+
+    Please know that whenever you're ready to explore the wonders of Chile - from the Atacama Desert to Patagonia - I'll be here to help create your perfect journey.
+
+    Feel free to reach out anytime if you have questions or when you're ready to start planning.
+
+    Wishing you all the best!
+
+    Warm regards,
+    {state['agent_name']}
+    {state['company_name']}"""
+        
         response_delay = timedelta(hours=random.uniform(2, 4))
         
         email = EmailMessage(
@@ -416,3 +433,225 @@ class WanderoAgent:
         
         body = '\n'.join(body_lines).strip()
         return subject, body
+    
+    # Add these methods to WanderoAgent class
+
+    def handle_price_discussion(self, state: ConversationState) -> ConversationState:
+        """Handle specific price-related questions"""
+        # Get client's concern
+        last_client_msg = ""
+        for msg in reversed(state["messages"]):
+            if msg["sender"] == state["client_name"]:
+                last_client_msg = msg["body"]
+                break
+        
+        # Extract their budget concern
+        client_budget_max = state.get("client_budget", {}).get("max", 0)
+        current_price = state.get("current_offer", {}).get("total_price", 0)
+        
+        # Check if we can work with their budget
+        if current_price > client_budget_max * 1.2:  # More than 20% over
+            # Too far apart
+            can_work = False
+            suggestion = "alternative budget-friendly options"
+        else:
+            # Can potentially work
+            can_work = True
+            max_discount = self.company_data.get('max_discount', 0.15)
+            
+        prompt = f"""
+        You are {state['agent_name']} from {state['company_name']} discussing pricing for CHILE travel.
+        
+        Client's message: "{last_client_msg}"
+        
+        Current package price: ${current_price}
+        Client's budget: up to ${client_budget_max}
+        Can offer discount: {can_work}
+        Max discount available: {max_discount * 100}%
+        
+        Write a helpful response that:
+        1. Acknowledges their budget concern
+        2. {"Offers a discount or payment plan" if can_work else "Suggests this might not be the right fit"}
+        3. Shows enthusiasm about helping them visit Chile
+        4. Keeps the conversation going if they're interested
+        
+        Be understanding and solution-oriented.
+        
+        Format:
+        Subject: Re: Your Chile Adventure - Let's Make It Work!
+        Body: [helpful response about pricing]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        # Apply discount if offered
+        if can_work and state.get("discounts_offered", 0) < max_discount:
+            state["discounts_offered"] = min(0.1, max_discount)
+        
+        response_delay = timedelta(minutes=random.uniform(20, 40))  # Quick response for price concerns
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state.get("last_client_response_time") or state.get("current_time") or datetime.now() + response_delay,
+            sentiment=0.7
+        )
+        
+        state["messages"].append(email)
+        state["last_wandero_response_time"] = email["timestamp"]
+        
+        return state
+
+    def address_authenticity_concerns(self, state: ConversationState) -> ConversationState:
+        """Address concerns about authentic vs touristy experiences"""
+        last_client_msg = ""
+        for msg in reversed(state["messages"]):
+            if msg["sender"] == state["client_name"]:
+                last_client_msg = msg["body"]
+                break
+        
+        prompt = f"""
+        You are {state['agent_name']} from {state['company_name']} addressing concerns about authentic experiences in CHILE.
+        
+        Client said: "{last_client_msg}"
+        
+        They want authentic, local experiences and are worried about tourist traps.
+        Company type: {self.company_data.get('type')}
+        
+        Write a response that:
+        1. Shows you understand their desire for authenticity
+        2. Explains how your packages include authentic local experiences
+        3. Mentions specific examples of non-touristy activities in Chile
+        4. Reassures them while staying true to your company type
+        
+        IMPORTANT: Talk about CHILE, not generic "[Destination Name]"
+        
+        Format:
+        Subject: Re: Authentic Chilean Experiences - Absolutely!
+        Body: [reassuring response about authentic Chile travel]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        response_delay = timedelta(minutes=random.uniform(30, 60))
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state.get("last_client_response_time") or state.get("current_time") or datetime.now() + response_delay,
+            sentiment=0.8
+        )
+        
+        state["messages"].append(email)
+        state["last_wandero_response_time"] = email["timestamp"]
+        
+        return state
+
+    def handle_negotiation(self, state: ConversationState) -> ConversationState:
+        """Handle general negotiation or questions - TRAVEL focused"""
+        last_client_msg = ""
+        for msg in reversed(state["messages"]):
+            if msg["sender"] == state["client_name"]:
+                last_client_msg = msg["body"]
+                break
+        
+        # Make sure we stay in travel context
+        prompt = f"""
+        You are {state['agent_name']} from {state['company_name']}, a TRAVEL AGENCY specializing in CHILE.
+        
+        Client's message: "{last_client_msg}"
+        
+        This is a conversation about TRAVEL TO CHILE, not event planning or any other service.
+        The client is interested (interest level: {state['interest_level']}) and asking questions.
+        
+        Write a helpful response that:
+        1. Addresses their specific questions or concerns
+        2. Stays focused on CHILE TRAVEL
+        3. Keeps the conversation moving forward
+        4. Shows enthusiasm about their trip
+        
+        DO NOT mention event planning, meetings, or any non-travel topics.
+        
+        Format:
+        Subject: Re: Your Chile Adventure
+        Body: [response focused on their Chile travel plans]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        response_delay = timedelta(hours=random.uniform(1, 2))
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state.get("last_client_response_time") or state.get("current_time") or datetime.now() + response_delay,
+            sentiment=0.7
+        )
+        
+        state["messages"].append(email)
+        state["last_wandero_response_time"] = email["timestamp"]
+        
+        return state
+
+    # Update the accept_decline method to be more appropriate
+    def accept_decline(self, state: ConversationState) -> ConversationState:
+        """Gracefully accept client's decision to not book"""
+        prompt = f"""
+        You are {state['agent_name']} from {state['company_name']}, a CHILE TRAVEL AGENCY.
+        
+        The client has decided not to book their Chile trip at this time.
+        
+        Write a gracious closing email that:
+        1. Thanks them for considering Chile as a destination
+        2. Leaves the door open for future travel
+        3. Offers to help when they're ready
+        4. Mentions Chile specifically
+        5. Stays professional and warm
+        
+        This is about TRAVEL, not event planning!
+        
+        Format:
+        Subject: Re: Your Chile Travel Inquiry
+        Body: [brief, gracious closing about their Chile travel plans]
+        """
+        
+        response = self.llm.invoke(prompt).content
+        subject, body = self._parse_email_response(response)
+        
+        # Fallback if LLM fails
+        if not body.strip() or "event" in body.lower():
+            body = f"""Dear {state['client_name']},
+
+    Thank you so much for considering {state['company_name']} for your Chile adventure. I understand that now might not be the right time for your trip.
+
+    Please know that whenever you're ready to explore the wonders of Chile - from the Atacama Desert to Patagonia - I'll be here to help create your perfect journey.
+
+    Feel free to reach out anytime if you have questions or when you're ready to start planning.
+
+    Wishing you all the best!
+
+    Warm regards,
+    {state['agent_name']}
+    {state['company_name']}"""
+        
+        response_delay = timedelta(hours=random.uniform(2, 4))
+        
+        email = EmailMessage(
+            subject=subject,
+            body=body,
+            sender=f"{state['agent_name']} <{state['company_name']}>",
+            timestamp=state.get("last_client_response_time") or state.get("current_time") or datetime.now() + response_delay,
+            sentiment=0.6
+        )
+        
+        state["messages"].append(email)
+        state["phase"] = "abandoned"
+        state["conversation_ended"] = True
+        
+        return state
